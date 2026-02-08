@@ -8,7 +8,8 @@ app.secret_key = "abc"
 
 # ================= DATABASE CONFIG =================
 import os
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:zSolgKTBDPWVolsSoYRiYsGoGyzFMlOl@nozomi.proxy.rlwy.net:42799/railway"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
