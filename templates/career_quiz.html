@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Test - CareerLens</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4b5563;
+            --accent: #10b981;
+            --dark: #1f2937;
+            --danger: #ef4444;
+            --success: #10b981;
+        }
+        
+        body {
+            background: #f9fafb;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .quiz-container {
+            max-width: 800px;
+            margin: 100px auto 50px;
+            padding: 20px;
+        }
+        
+        .quiz-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            position: relative;
+            min-height: 500px;
+        }
+        
+        .option-label {
+            display: block;
+            padding: 15px 20px;
+            margin: 10px 0;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .option-label:hover {
+            border-color: var(--primary);
+            background: #f8fafc;
+        }
+        
+        .option-label.selected {
+            border-color: var(--primary);
+            background: #f0f9ff;
+        }
+        
+        .option-radio {
+            display: none;
+        }
+        
+        .option-text {
+            font-size: 1.1rem;
+            color: var(--dark);
+        }
+        
+        .option-letter {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background: #e5e7eb;
+            border-radius: 50%;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        
+        .option-label.selected .option-letter {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary-custom {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary-custom:hover {
+            background: var(--dark);
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger-custom {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-danger-custom:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+        
+        .skill-badge {
+            background: #e5e7eb;
+            color: var(--dark);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            right: 30px;
+        }
+        
+        .question-counter {
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            position: absolute;
+            top: 15px;
+            right: 30px;
+        }
+        
+        .leave-quiz-btn {
+            position: absolute;
+            top: 15px;
+            right: 150px;
+        }
+        
+        .question-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        
+        .question-dot {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: 2px solid #e5e7eb;
+        }
+        
+        .question-dot.current {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .question-dot.answered {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
+        
+        .question-dot.unanswered {
+            background: white;
+            color: var(--dark);
+            border-color: #e5e7eb;
+        }
+        
+        .question-dot:hover {
+            transform: scale(1.1);
+        }
+        
+        .question-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .modal-header {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .question-content {
+            min-height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/home-login">
+                <img src="{{url_for('static',filename = 'logo.png')}}" class="me-2" style="width: 40px; height: 40px;">
+                <strong>CareerLens</strong>
+            </a>
+            <div class="navbar-text">
+                Welcome, {{ user.name }}! | Career Test
+            </div>
+        </div>
+    </nav>
+
+    <!-- Quiz Content -->
+    <div class="quiz-container">
+        <div class="quiz-card">
+            <!-- Leave Quiz Button (Top Right) -->
+            <button type="button" class="btn btn-danger-custom leave-quiz-btn" data-bs-toggle="modal" data-bs-target="#leaveQuizModal">
+                <i class="bi bi-door-open me-2"></i>Leave Quiz
+            </button>
+            
+            <!-- Question Counter (Top Right) -->
+            <div class="question-counter">
+                Q{{ question_number }}/{{ total_questions }}
+            </div>
+            
+            <!-- Question -->
+            <div class="skill-badge">{{ question.skill }}</div>
+            <h3 class="mb-4">{{ question.question }}</h3>
+            
+            <!-- Answer Form -->
+            <form id="answerForm" method="POST" action="/assessment/career/save-answer">
+                <input type="hidden" name="question_id" value="{{ question.id }}">
+                <input type="hidden" name="current_question" value="{{ question_number }}">
+                <input type="hidden" name="answer" id="hiddenAnswer" value="{{ user_answer or '' }}">
+                
+                <!-- Options -->
+                <div class="options-container">
+                    {% set options = [
+                        ('A', question.option_a),
+                        ('B', question.option_b),
+                        ('C', question.option_c),
+                        ('D', question.option_d)
+                    ] %}
+                    
+                    {% for letter, text in options %}
+                    <label class="option-label {% if user_answer == letter %}selected{% endif %}"
+                           data-value="{{ letter }}">
+                        <span class="option-letter">{{ letter }}</span>
+                        <span class="option-text">{{ text }}</span>
+                    </label>
+                    {% endfor %}
+                </div>
+                
+                <!-- Navigation Buttons -->
+                <div class="nav-buttons">
+                    <div>
+                        <!-- Previous Button -->
+                        {% if question_number > 1 %}
+                        <a href="/assessment/career/question/{{ question_number - 1 }}" 
+                           class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-2"></i> Previous
+                        </a>
+                        {% endif %}
+                        
+                        <!-- Save & Next Button -->
+                        <button type="button" class="btn btn-primary-custom ms-2" id="saveNextBtn">
+                            Save & Next <i class="bi bi-arrow-right ms-2"></i>
+                        </button>
+
+                    </div>
+                    
+                    <!-- Submit Test Button (Bottom Right) -->
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#submitTestModal">
+                        <i class="bi bi-check-circle me-2"></i>Submit Test
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Question Navigation Dots (Bottom) -->
+        <div class="question-info">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="mb-0">Question Navigation</h6>
+                <div class="legend d-flex gap-3">
+                    <div class="d-flex align-items-center gap-1">
+                        <div class="question-dot current" style="width: 20px; height: 20px;"></div>
+                        <small>Current</small>
+                    </div>
+                    <div class="d-flex align-items-center gap-1">
+                        <div class="question-dot answered" style="width: 20px; height: 20px;"></div>
+                        <small>Answered</small>
+                    </div>
+                    <div class="d-flex align-items-center gap-1">
+                        <div class="question-dot unanswered" style="width: 20px; height: 20px;"></div>
+                        <small>Unanswered</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-grid">
+                {% for i in range(1, total_questions + 1) %}
+                {% set question_id = session['career_test_questions'][i-1] if 'career_test_questions' in session else 0 %}
+                {% set user_answer = session.get('user_answers', {}).get(question_id|string, '') %}
+                
+                <a href="/assessment/career/question/{{ i }}" 
+                   class="question-dot 
+                          {% if i == question_number %}current
+                          {% elif user_answer != '' %}answered
+                          {% else %}unanswered{% endif %}">
+                    {{ i }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Leave Quiz Modal -->
+    <div class="modal fade" id="leaveQuizModal" tabindex="-1" aria-labelledby="leaveQuizModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="leaveQuizModalLabel">
+                        <i class="bi bi-exclamation-triangle me-2"></i>Leave Quiz?
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <i class="bi bi-question-circle display-1 text-warning"></i>
+                    </div>
+                    <p class="text-center mb-4">
+                        Are you sure you want to leave the quiz? 
+                        <br>
+                        <strong>Your progress will be saved, but you won't be able to resume from the same question.</strong>
+                    </p>
+                    <div class="alert alert-warning">
+                        <i class="bi bi-info-circle me-2"></i>
+                        You can review and submit your test later from the dashboard.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle me-2"></i>Cancel
+                    </button>
+                    <a href="/home-login" class="btn btn-danger">
+                        <i class="bi bi-door-open me-2"></i>Leave Quiz
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Submit Test Modal -->
+    <div class="modal fade" id="submitTestModal" tabindex="-1" aria-labelledby="submitTestModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="submitTestModalLabel">
+                        <i class="bi bi-check-circle me-2"></i>Submit Test
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <i class="bi bi-clipboard-check display-1 text-success"></i>
+                    </div>  
+                    
+                    <div class="test-summary mb-4">
+                        <h6>Test Summary:</h6>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="card text-center mb-3">
+                                    <div class="card-body py-3">
+                                        <h4 class="text-success" id="answeredCount">0</h4>
+                                        <small>Answered</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="card text-center mb-3">
+                                    <div class="card-body py-3">
+                                        <h4 class="text-danger" id="unansweredCount">0</h4>
+                                        <small>Unanswered</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-warning d-none" id="unansweredWarning">
+                            <i class="bi bi-exclamation-triangle me-2"></i>
+                            You have <span id="unansweredText"></span> unanswered question(s).
+                        </div>
+                    
+                    <p class="text-center mb-4">
+                        Are you ready to submit your career test?
+                        <br>
+                        <strong>Once submitted, you cannot change your answers.</strong>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-arrow-left me-2"></i>Go Back
+                    </button>
+                    <form id="finalSubmitForm" method="POST" action="/assessment/career/submit" style="display: inline;">
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-check-circle me-2"></i>Yes, Submit Test
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Processing Modal -->
+    <div class="modal fade" id="processingModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center p-4">
+        <div class="modal-body">
+            <div class="spinner-border text-success mb-3" role="status"></div>
+            <h5>We are creating your result...</h5>
+            <p>Please wait while we send your result on email.</p>
+        </div>
+        </div>
+    </div>
+    </div>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        let selectedAnswer = "{{ user_answer or '' }}";
+        
+        // Function to select an option
+        function selectOption(option) {
+            // Remove selected class from all options
+            document.querySelectorAll('.option-label').forEach(label => {
+                label.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            option.classList.add('selected');
+            
+            // Get the selected value from data-value attribute
+            selectedAnswer = option.getAttribute('data-value');
+            
+            // Update hidden input
+            document.getElementById('hiddenAnswer').value = selectedAnswer;
+            
+            console.log("Selected answer:", selectedAnswer);
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial selection if there's a saved answer
+            if (selectedAnswer && selectedAnswer !== '') {
+                const selectedLabel = document.querySelector(`.option-label[data-value="${selectedAnswer}"]`);
+                if (selectedLabel) {
+                    selectedLabel.classList.add('selected');
+                }
+            }
+            
+            // Add click event to all option labels
+            document.querySelectorAll('.option-label').forEach(label => {
+                label.addEventListener('click', function() {
+                    selectOption(this);
+                });
+            });
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                // 1-4 for options A-D
+                if (e.key >= '1' && e.key <= '4') {
+                    e.preventDefault();
+                    const optionIndex = parseInt(e.key) - 1;
+                    const labels = document.querySelectorAll('.option-label');
+                    if (labels[optionIndex]) {
+                        selectOption(labels[optionIndex]);
+                    }
+                }
+                
+                // Enter to save and next
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    const saveBtn = document.getElementById('saveNextBtn');
+                    if (saveBtn) {
+                        saveBtn.click();
+                    }
+                }
+                
+                // N for next, P for previous
+                if (e.key === 'n' || e.key === 'N') {
+                    e.preventDefault();
+                    const nextBtn = document.querySelector('a[href*="/assessment/career/question/{{ question_number + 1 }}"]');
+                    if (nextBtn && {{ question_number }} < {{ total_questions }}) {
+                        // Save current answer before navigating
+                        document.getElementById('saveNextBtn')?.click();
+                    }
+                }
+                
+                if (e.key === 'p' || e.key === 'P') {
+                    e.preventDefault();
+                    const prevBtn = document.querySelector('a[href*="/assessment/career/question/{{ question_number - 1 }}"]');
+                    if (prevBtn && {{ question_number }} > 1) {
+                        // Save current answer before navigating
+                        document.getElementById('saveNextBtn')?.click();
+                    }
+                }
+            });
+            
+            // Auto-save when clicking question dots
+            document.querySelectorAll('.question-dot').forEach(dot => {
+                dot.addEventListener('click', function(e) {
+                    // Don't prevent default - let the link work
+                    // But first save current answer
+                    const form = document.getElementById('answerForm');
+                    form.submit();
+                    
+                    // Allow a moment for form submission
+                    setTimeout(() => {
+                        window.location.href = this.href;
+                    }, 100);
+                });
+            });
+        });
+
+    document.getElementById('submitTestModal').addEventListener('show.bs.modal', function () {
+        fetch('/assessment/career/submit-modal-data')
+            .then(response => response.text())   // json() nahi, text()
+            .then(data => {
+                const parts = data.split('|');
+                const answered = parts[0];
+                const unanswered = parts[1];
+
+                document.getElementById('answeredCount').innerText = answered;
+                document.getElementById('unansweredCount').innerText = unanswered;
+
+                if (unanswered > 0) {
+                    document.getElementById('unansweredText').innerText = unanswered;
+                    document.getElementById('unansweredWarning').classList.remove('d-none');
+                } else {
+                    document.getElementById('unansweredWarning').classList.add('d-none');
+                }
+            });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var saveNextBtn = document.getElementById("saveNextBtn");
+        if (!saveNextBtn) return;
+
+        saveNextBtn.addEventListener("click", function () {
+            var currentQuestion = parseInt("{{ question_number }}");
+            var totalQuestions = parseInt("{{ total_questions }}");
+            var form = document.getElementById("answerForm");
+
+            if (currentQuestion === totalQuestions) {
+                // 20th question
+                fetch(form.action, {
+                    method: "POST",
+                    body: new FormData(form)
+                }).then(function () {
+                    // Pehla save, pachi modal open
+                    var submitModal = new bootstrap.Modal(
+                        document.getElementById("submitTestModal")
+                    );
+                    submitModal.show();
+                });
+            } else {
+                // 1–19 questions
+                form.submit();
+            }
+        });
+    });
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const submitModal = document.getElementById("submitTestModal");
+        const finalForm = document.getElementById("finalSubmitForm");
+        const answerForm = document.getElementById("answerForm");
+        if (!submitModal || !finalForm || !answerForm) {
+            return;
+        }
+        submitModal.addEventListener("show.bs.modal", function () {
+            fetch('/assessment/career/submit-modal-data', { credentials: "same-origin" })
+                .then(r => r.text())
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const finalForm = document.getElementById("finalSubmitForm");
+        const processingModal = new bootstrap.Modal(
+            document.getElementById("processingModal")
+        );
+
+        finalForm.addEventListener("submit", function () {
+            // Form submit thase, pachi backend call thase
+            // Pehla modal show karo
+            processingModal.show();
+        });
+
+    });
+    </script>
+
+
+</body>
+</html>

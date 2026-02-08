@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CareerLens Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+:root {
+    --primary: #4b5563;
+    --secondary: #6b7280;
+    --accent: #10b981;
+    --background: #ffffff;
+    --dark: #1f2937;
+}
+
+body {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 20px;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 420px;
+    animation: containerAppear 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.registration-card {
+    background: var(--background);
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08), 
+                0 2px 10px rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(107, 114, 128, 0.15);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.registration-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12), 
+                0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.registration-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--primary) 100%);
+    animation: borderGlow 2s infinite alternate;
+}
+
+.brand-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    animation: slideDown 0.5s ease-out 0.1s both;
+}
+
+.brand-title {
+    color: var(--dark);
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+}
+
+.brand-subtitle {
+    color: var(--secondary);
+    font-size: 0.95rem;
+    font-weight: 400;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 0.5s ease-out forwards;
+    opacity: 0;
+}
+
+.form-group:nth-child(1) { animation-delay: 0.2s; }
+.form-group:nth-child(2) { animation-delay: 0.3s; }
+.form-group:nth-child(3) { animation-delay: 0.4s; }
+.form-group:nth-child(4) { animation-delay: 0.5s; }
+
+.form-label {
+    color: var(--dark);
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+    display: block;
+    transition: color 0.3s ease;
+}
+
+.form-input {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 1rem;
+    color: var(--dark);
+    background: #f9fafb;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+}
+
+.form-input:focus {
+    border-color: var(--accent);
+    background: var(--background);
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+    transform: translateY(-1px);
+}
+
+.form-input:hover:not(:focus) {
+    border-color: var(--primary);
+    background: #f3f4f6;
+}
+
+.btn-register {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, var(--accent) 0%, #0da271 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 0.5s ease-out 0.6s both;
+    opacity: 0;
+}
+
+.btn-register:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+}
+
+.btn-register:active {
+    transform: translateY(0);
+    transition: transform 0.1s ease;
+}
+
+.btn-register:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.btn-register::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.6);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1) translate(-50%);
+}
+
+.btn-register:focus:not(:active)::after {
+    animation: ripple 1s ease-out;
+}
+
+.auth-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1.5rem 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e5e7eb;
+    animation: fadeInUp 0.5s ease-out 0.7s both;
+    opacity: 0;
+}
+
+.auth-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.auth-link:hover {
+    color: var(--accent);
+    transform: translateX(2px);
+}
+
+.auth-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+}
+
+.auth-link:hover::after {
+    width: 100%;
+}
+
+/* Modal Animations - Kept from login page */
+.modal.fade .modal-dialog {
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal.show .modal-dialog {
+    transform: scale(1);
+}
+
+.modal-content {
+    border-radius: 16px;
+    border: 1px solid rgba(107, 114, 128, 0.15);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    animation: modalScale 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-bottom: 1px solid #e5e7eb;
+    border-radius: 16px 16px 0 0;
+    padding: 1.5rem;
+}
+
+.modal-title {
+    color: var(--dark);
+    font-weight: 600;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+/* Custom OTP Modal - Keep existing OTP modal styles as they are */
+.otp-modal {
+    background: var(--background);
+    border-radius: 16px;
+    padding: 2.5rem;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(107, 114, 128, 0.15);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    z-index: 1000;
+    animation: modalScale 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    display: none;
+}
+
+.otp-modal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--primary) 100%);
+    border-radius: 16px 16px 0 0;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    z-index: 999;
+    display: none;
+    animation: overlayFadeIn 0.3s ease-out;
+}
+
+.otp-input-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.otp-digit {
+    width: 50px;
+    height: 60px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    background: #f9fafb;
+    color: var(--dark);
+    transition: all 0.3s ease;
+}
+
+.otp-digit:focus {
+    border-color: var(--accent);
+    background: var(--background);
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+    outline: none;
+    transform: translateY(-2px);
+}
+
+.alert {
+    animation: alertSlide 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    color: #991b1b;
+    border-left: 4px solid #dc2626;
+}
+
+.success-alert {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    color: #065f46;
+    border-left: 4px solid var(--accent);
+}
+
+/* Animations from login page */
+@keyframes containerAppear {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes borderGlow {
+    from {
+        opacity: 0.7;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(40, 40);
+        opacity: 0;
+    }
+}
+
+@keyframes modalScale {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes overlayFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes alertSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.password-strength {
+    height: 4px;
+    background: #e5e7eb;
+    border-radius: 2px;
+    margin-top: 0.5rem;
+    overflow: hidden;
+}
+
+.password-strength-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    transition: width 0.3s ease, background 0.3s ease;
+    border-radius: 2px;
+}
+
+.password-feedback {
+    font-size: 0.85rem;
+    color: var(--secondary);
+    margin-top: 0.5rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.form-input:focus + .password-feedback,
+.form-input:focus + .password-strength + .password-feedback {
+    opacity: 1;
+}
+
+.input-group .btn {
+    border-radius: 8px;
+    margin-left: 10px;
+    padding: 0.75rem 1.25rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.input-group .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.otp-input {
+    letter-spacing: 8px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-align: center;
+    padding: 1rem;
+}
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Registration Form -->
+        <div class="form-container" id="registrationForm">
+            <div class="registration-card">
+                <div class="brand-header">
+                    <h1 class="brand-title">CareerLens</h1>
+                    <p class="brand-subtitle">Create your account to begin</p>
+                </div>
+
+                {% if registation_fail %}
+                <div class="alert alert-dismissible fade show" role="alert">
+                    Password and Confirm Password do not match!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                {% endif %}
+
+                <!-- Normal Registration Form - Submitted to Server -->
+                <form action="/registation" method="post" id="registrationFormElement">
+                    
+                    <!-- Full Name -->
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" name="r_name" class="form-input" placeholder="Enter your full name" required>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" name="r_email" class="form-input" placeholder="Enter your work email" id="emailInput" required>
+                    </div>
+                    
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="r_password" class="form-input" placeholder="Create secure password" id="passwordInput" required>
+                        <div class="password-strength">
+                            <div class="password-strength-bar" id="passwordStrength"></div>
+                        </div>
+                        <div class="password-feedback">Use 8+ characters with letters, numbers, and symbols</div>
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div class="form-group">
+                        <label class="form-label">Confirm Password</label>
+                        <input type="password" name="r_confirmPassword" class="form-input" placeholder="Re-enter password" id="confirmPasswordInput" required>
+                        <div class="password-feedback">Make sure passwords match</div>
+                    </div>
+                    
+                    <!-- Register Button -->
+                    <button type="submit" class="btn-register" id="registerButton">
+                        Create Account
+                    </button>
+
+                    <!-- Links -->
+                    <div class="auth-links">
+                        <a href="/login" class="auth-link">Already have an account?</a>
+                        <a href="javascript:void(0)" class="auth-link" onclick="window.history.back()">← Back</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- OTP Verification Modal -->
+        <div class="modal-overlay" id="otpOverlay"></div>
+        <div class="otp-modal" id="otpModal">
+            <div class="brand-header">
+                <h2 class="brand-title">Verify Email</h2>
+                <p class="brand-subtitle">Enter the 6-digit code sent to</p>
+                <p class="text-secondary" id="userEmail"></p>
+            </div>
+            
+            {% if otp_fail %}
+            <div class="alert alert-dismissible fade show" role="alert">
+                <strong>Verification Failed!</strong> The OTP you entered is incorrect. Please try again.
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            {% endif %}
+            
+            <!-- OTP Form - Submitted to Server -->
+            <form action="/registation" method="post" id="otpForm">
+                <div class="otp-input-group">
+                    <input type="text" class="otp-digit" maxlength="1" data-index="0" name="digit1" required>
+                    <input type="text" class="otp-digit" maxlength="1" data-index="1" name="digit2" required>
+                    <input type="text" class="otp-digit" maxlength="1" data-index="2" name="digit3" required>
+                    <input type="text" class="otp-digit" maxlength="1" data-index="3" name="digit4" required>
+                    <input type="text" class="otp-digit" maxlength="1" data-index="4" name="digit5" required>
+                    <input type="text" class="otp-digit" maxlength="1" data-index="5" name="digit6" required>
+                </div>
+                
+                <input type="hidden" name="r_otp" id="otpInput">
+                
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <button type="button" class="btn" style="border: 2px solid var(--secondary); color: var(--secondary); padding: 0.75rem 1.5rem;" onclick="closeOTPModal()">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn" style="background: var(--accent); color: white; padding: 0.75rem 2rem;">
+                        Verify Account
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if show_otp_modal %}
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        showOTPModal();
+    });
+    </script>
+    {% endif %}
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Password strength indicator
+        const passwordInput = document.getElementById('passwordInput');
+        const passwordStrength = document.getElementById('passwordStrength');
+        const confirmPasswordInput = document.getElementById('confirmPasswordInput');
+        
+        if (passwordInput) {
+            passwordInput.addEventListener('input', function() {
+                const password = this.value;
+                let strength = 0;
+                
+                // Length check
+                if (password.length >= 8) strength += 25;
+                if (password.length >= 12) strength += 15;
+                
+                // Complexity checks
+                if (/[A-Z]/.test(password)) strength += 20;
+                if (/[a-z]/.test(password)) strength += 20;
+                if (/[0-9]/.test(password)) strength += 20;
+                if (/[^A-Za-z0-9]/.test(password)) strength += 20;
+                
+                // Update strength bar
+                passwordStrength.style.width = Math.min(strength, 100) + '%';
+                
+                // Update color based on strength
+                if (strength < 40) {
+                    passwordStrength.style.background = '#ef4444';
+                } else if (strength < 70) {
+                    passwordStrength.style.background = '#f59e0b';
+                } else {
+                    passwordStrength.style.background = 'var(--accent)';
+                }
+            });
+        }
+        
+        // Password confirmation validation
+        if (confirmPasswordInput) {
+            confirmPasswordInput.addEventListener('input', function() {
+                const password = passwordInput.value;
+                const confirm = this.value;
+                
+                if (confirm && password !== confirm) {
+                    this.style.borderColor = '#ef4444';
+                    this.style.boxShadow = '0 0 0 4px rgba(239, 68, 68, 0.15)';
+                } else if (confirm) {
+                    this.style.borderColor = 'var(--accent)';
+                    this.style.boxShadow = '0 0 0 4px rgba(16, 185, 129, 0.15)';
+                } else {
+                    this.style.borderColor = '#e5e7eb';
+                    this.style.boxShadow = 'none';
+                }
+            });
+        }
+        
+        // OTP digit input handling
+        const otpDigits = document.querySelectorAll('.otp-digit');
+        if (otpDigits.length > 0) {
+            otpDigits.forEach((digit, index) => {
+                digit.addEventListener('input', function(e) {
+                    if (this.value.length === 1 && index < 5) {
+                        otpDigits[index + 1].focus();
+                    }
+                    
+                    // Update hidden OTP input
+                    const otpValue = Array.from(otpDigits).map(d => d.value).join('');
+                    document.getElementById('otpInput').value = otpValue;
+                });
+                
+                digit.addEventListener('keydown', function(e) {
+                    if (e.key === 'Backspace' && this.value.length === 0 && index > 0) {
+                        otpDigits[index - 1].focus();
+                    }
+                });
+                
+                digit.addEventListener('paste', function(e) {
+                    e.preventDefault();
+                    const pasteData = e.clipboardData.getData('text').slice(0, 6);
+                    const digits = pasteData.split('');
+                    digits.forEach((char, i) => {
+                        if (otpDigits[i]) {
+                            otpDigits[i].value = char;
+                        }
+                    });
+                    document.getElementById('otpInput').value = pasteData;
+                    if (pasteData.length === 6) {
+                        otpDigits[5].focus();
+                    } else if (pasteData.length > 0) {
+                        otpDigits[pasteData.length - 1].focus();
+                    }
+                });
+            });
+        }
+        
+        // Form validation before submission
+        const registrationForm = document.getElementById('registrationFormElement');
+        if (registrationForm) {
+            registrationForm.addEventListener('submit', function(e) {
+                const password = document.getElementById('passwordInput').value;
+                const confirmPassword = document.getElementById('confirmPasswordInput').value;
+                
+                if (password !== confirmPassword) {
+                    e.preventDefault();
+                    showAlert('Passwords do not match!', 'error');
+                    return false;
+                }
+                
+                if (password.length < 8) {
+                    e.preventDefault();
+                    showAlert('Password must be at least 8 characters!', 'error');
+                    return false;
+                }
+                
+                // Disable button to prevent multiple submissions
+                const registerBtn = document.getElementById('registerButton');
+                registerBtn.disabled = true;
+                registerBtn.innerHTML = 'Registering...';
+                
+                return true;
+            });
+        }
+    });
+    
+    function showOTPModal() {
+        document.getElementById('otpOverlay').style.display = 'block';
+        document.getElementById('otpModal').style.display = 'block';
+        
+        // Set email in modal
+        const emailInput = document.getElementById('emailInput');
+        if (emailInput) {
+            document.getElementById('userEmail').textContent = emailInput.value;
+        }
+    }
+    
+    function closeOTPModal() {
+        document.getElementById('otpOverlay').style.display = 'none';
+        document.getElementById('otpModal').style.display = 'none';
+    }
+    
+    function showAlert(message, type) {
+        // Remove existing alerts
+        const existingAlert = document.querySelector('.alert:not(.alert-dismissible)');
+        if (existingAlert) {
+            existingAlert.remove();
+        }
+        
+        // Create new alert
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `alert ${type === 'success' ? 'success-alert' : ''}`;
+        alertDiv.textContent = message;
+        alertDiv.style.position = 'fixed';
+        alertDiv.style.top = '20px';
+        alertDiv.style.left = '50%';
+        alertDiv.style.transform = 'translateX(-50%)';
+        alertDiv.style.zIndex = '2000';
+        alertDiv.style.padding = '1rem 1.5rem';
+        alertDiv.style.minWidth = '300px';
+        alertDiv.style.textAlign = 'center';
+        
+        document.body.appendChild(alertDiv);
+        
+        // Remove alert after 3 seconds
+        setTimeout(() => {
+            if (alertDiv.parentNode) {
+                alertDiv.remove();
+            }
+        }, 3000);
+    }
+    
+    // Ripple effect for buttons
+    document.querySelectorAll('.btn-register, .btn[style*="background: var(--accent)"]').forEach(button => {
+        button.addEventListener('click', function(e) {
+            if (this.disabled) return;
+            
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const ripple = document.createElement('span');
+            ripple.style.position = 'absolute';
+            ripple.style.background = 'rgba(255, 255, 255, 0.4)';
+            ripple.style.borderRadius = '50%';
+            ripple.style.transform = 'scale(0)';
+            ripple.style.animation = 'ripple 0.6s linear';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.style.width = '100px';
+            ripple.style.height = '100px';
+            ripple.style.pointerEvents = 'none';
+            
+            this.style.position = 'relative';
+            this.style.overflow = 'hidden';
+            this.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+        
+        // Button press animation
+        button.addEventListener('mousedown', function() {
+            if (!this.disabled) {
+                this.style.transform = 'translateY(0) scale(0.98)';
+            }
+        });
+        
+        button.addEventListener('mouseup', function() {
+            if (!this.disabled) {
+                this.style.transform = 'translateY(-2px) scale(1)';
+            }
+        });
+        
+        button.addEventListener('mouseleave', function() {
+            if (!this.disabled) {
+                this.style.transform = 'translateY(0) scale(1)';
+            }
+        });
+    });
+    </script>
+</body>
+</html>
+
+<!--
+Key Changes Made:
+
+Email OTP Fixed:
+
+Form now directly submits to /registation (your server endpoint)
+
+No JavaScript OTP sending - handled by your backend
+
+When backend sends OTP and returns show_otp_modal = True, the OTP modal appears
+
+User enters OTP and submits to same /registation endpoint
+
+No Scrollbar:
+
+Added overflow: hidden to html, body
+
+Fixed container height with 100vh
+
+All content fits in viewport
+
+Same layout as login page
+
+Removed Resend OTP:
+
+Removed all resend OTP functionality
+
+No countdown timer
+
+No resend link
+
+Clean OTP verification only
+
+Backend Integration:
+
+Form submission triggers your backend to send email
+
+Backend handles OTP generation and email sending
+
+When OTP is incorrect, shows error in modal
+
+When registration succeeds, should redirect to login
+
+How It Works:
+
+User fills registration form
+
+Clicks "Create Account"
+
+Form submits to /registation (POST request)
+
+Your backend:
+
+Validates data
+
+Sends OTP email
+
+Returns page with show_otp_modal = True
+
+OTP modal appears
+
+User enters OTP
+
+Form submits OTP to same endpoint
+
+Backend verifies OTP and creates account
+
+Note: The email sending happens on your server side. Make sure your backend has email sending configured with proper SMTP settings.
+-->

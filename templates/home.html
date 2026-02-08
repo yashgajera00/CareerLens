@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareerLens - Smart Career Guidance</title>
+    
+    <!-- Bootstrap CSS & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <style>
+        :root {
+            --primary: #4b5563;
+            --primary-light: #6b7280;
+            --primary-dark: #374151;
+            --secondary: #6b7280;
+            --accent: #10b981;
+            --accent-light: #34d399;
+            --accent-dark: #059669;
+            --dark: #1f2937;
+            --light: #ffffff;
+            --gray-light: #f9fafb;
+            --gray-medium: #e5e7eb;
+            --text-dark: #111827;
+            --text-light: #6b7280;
+            --gradient-primary: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+            --gradient-accent: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --gradient-subtle: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+        }
+        
+        * {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--text-dark);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            overflow-x: hidden;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+        
+        /* Navbar styles */
+        .navbar {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            border-bottom: 1px solid var(--gray-medium);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            animation: slideDown 0.5s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .navbar-brand-logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            margin-right: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            animation: logoFloat 3s ease-in-out infinite;
+            border: 1px solid var(--gray-medium);
+        }
+        
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        
+        .navbar-brand strong {
+            color: var(--dark);
+            font-weight: 800;
+            font-size: 1.8rem;
+            letter-spacing: -0.5px;
+        }
+        
+        .nav-link {
+            color: var(--text-dark) !important;
+            font-weight: 500;
+            margin: 0 10px;
+            position: relative;
+            padding: 8px 0 !important;
+        }
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::before,
+        .nav-link.active::before {
+            width: 100%;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary) !important;
+        }
+        
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 8px;
+            padding: 12px 28px;
+            font-weight: 600;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn-primary-custom::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-accent);
+            transition: left 0.5s ease;
+            z-index: -1;
+        }
+        
+        .btn-primary-custom:hover::before {
+            left: 0;
+        }
+        
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(75, 85, 99, 0.15);
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            padding: 180px 0 100px;
+            background: var(--gradient-subtle);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%234b5563' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            color: var(--dark);
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 35px;
+            line-height: 1.6;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+        
+        .hero-image-container {
+            position: relative;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        .hero-image {
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--gray-medium);
+            transform: perspective(1000px) rotateY(-5deg);
+            animation: imageAppear 1s ease-out 0.6s both;
+            filter: grayscale(20%);
+        }
+        
+        @keyframes imageAppear {
+            from {
+                opacity: 0;
+                transform: perspective(1000px) rotateY(-20deg) translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: perspective(1000px) rotateY(-5deg) translateX(0);
+            }
+        }
+        
+        .accent-text {
+            color: var(--accent);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .accent-text::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .hero-title:hover .accent-text::after {
+            transform: scaleX(1);
+        }
+        
+        /* Cards & Sections */
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--dark);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+        
+        .section-subtitle {
+            color: var(--text-light);
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 60px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--gray-medium);
+            padding: 30px;
+            height: 100%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gray-light);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+        
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            border-color: var(--accent-light);
+        }
+        
+        .feature-card .card-img-top {
+            border-radius: 8px;
+            object-fit: cover;
+            height: 200px;
+            margin-bottom: 25px;
+            transition: transform 0.5s ease;
+            filter: grayscale(30%);
+        }
+        
+        .feature-card:hover .card-img-top {
+            transform: scale(1.03);
+            filter: grayscale(0%);
+        }
+        
+        .feature-card h5 {
+            color: var(--dark);
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .feature-card p {
+            color: var(--text-light);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            color: white;
+            background: var(--gradient-primary);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon.accent {
+            background: var(--gradient-accent);
+        }
+        
+        /* Modal Styling */
+        .modal-content {
+            background: white;
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid var(--gray-medium);
+        }
+        
+        .modal-header {
+            background: var(--gray-light);
+            border-bottom: 1px solid var(--gray-medium);
+            padding: 25px;
+        }
+        
+        .head-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--dark);
+            width: 100%;
+            text-align: center;
+            letter-spacing: -0.5px;
+        }
+        
+        .btn-close {
+            opacity: 0.5;
+        }
+        
+        .modal-body {
+            padding: 35px;
+        }
+        
+        .modal-body h5 {
+            color: var(--dark);
+            font-weight: 700;
+            margin-top: 25px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .modal-body h5 i {
+            margin-right: 15px;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            background: var(--primary);
+        }
+        
+        .modal-body h5:nth-child(3) i { background: var(--primary-light); }
+        .modal-body h5:nth-child(5) i { background: var(--primary); }
+        .modal-body h5:nth-child(7) i { background: var(--secondary); }
+        .modal-body h5:nth-child(9) i { background: var(--accent); }
+        
+        .modal-body p {
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+        
+        .modal-body hr {
+            border-top: 1px solid var(--gray-medium);
+            opacity: 0.7;
+            margin: 25px 0;
+        }
+        
+        .cta-text {
+            background: var(--gray-light);
+            border-left: 4px solid var(--accent);
+            border-radius: 8px;
+            padding: 25px;
+            font-style: italic;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-text::before {
+            content: '"';
+            position: absolute;
+            top: -15px;
+            left: 15px;
+            font-size: 5rem;
+            color: var(--accent);
+            opacity: 0.2;
+            font-family: Georgia, serif;
+        }
+        
+        .btn-primary-lg {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 8px;
+            padding: 14px 35px;
+            font-weight: 600;
+            color: white;
+            font-size: 1.1rem;
+        }
+        
+        .btn-primary-lg:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(75, 85, 99, 0.15);
+            color: white;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: var(--gradient-subtle);
+            padding: 70px 0;
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid var(--gray-medium);
+            border-bottom: 1px solid var(--gray-medium);
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%234b5563' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+        
+        .cta-title {
+            font-size: 2.3rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+        
+        .cta-subtitle {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .btn-outline-custom {
+            background: transparent;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            padding: 14px 40px;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-custom:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(75, 85, 99, 0.1);
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 35px 0;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+        
+        /* Animation classes */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .hero-section::before {
+                width: 60%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-section {
+                padding: 150px 0 70px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .feature-card {
+                margin-bottom: 25px;
+            }
+            
+            .hero-image {
+                transform: none;
+                margin-top: 40px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .navbar-brand strong {
+                font-size: 1.5rem;
+            }
+            
+            .btn-primary-custom, .btn-outline-custom {
+                padding: 12px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <!-- Brand logo and name -->
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="{{url_for('static',filename = 'logo.png')}}" class="navbar-brand-logo">
+                <strong>CareerLens</strong>
+            </a>
+
+            <!-- Toggler for mobile -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                    aria-controls="navbarContent" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar links and buttons -->
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <a class="btn btn-primary-custom me-2" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary-custom" href="/registation">Register</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7">
+                    <h1 class="hero-title">Build Your Career<br>With <span class="accent-text">CareerLens</span></h1>
+                    <p class="hero-subtitle">
+                        Smart career guidance platform that analyzes your skills,
+                        interests and strengths to recommend the best career path.
+                        Discover your potential with data-driven insights.
+                    </p>
+                    <div class="mb-4">
+                        <button class="btn btn-primary-custom" data-bs-toggle="modal" data-bs-target="#how_it_work">
+                            <i class="bi bi-play-circle me-2"></i> How It Works
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="hero-image-container">
+                        <img src="{{url_for('static',filename = 'cp.png')}}" class="img-fluid hero-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problems Section -->
+    <section class="container mt-5 pt-5">
+        <div class="text-center mb-5 animate-on-scroll">
+            <h2 class="section-title">Why CareerLens?</h2>
+            <p class="section-subtitle">Because your future deserves clarity and direction</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 animate-on-scroll" data-delay="0.1">
+                <div class="card feature-card">
+                    <img class="card-img-top" src="{{url_for('static',filename = 'career.png')}}">
+                    <h5 class="fw-bold">Career Confusion</h5>
+                    <p>Uncertain about future career choices? We provide clarity through data-driven analysis and personalized recommendations.</p>
+                </div>
+            </div>
+            <div class="col-md-4 animate-on-scroll" data-delay="0.2">
+                <div class="card feature-card">
+                    <img src="{{url_for('static',filename = 'lack.jpg')}}" class="card-img-top">
+                    <h5 class="fw-bold">Lack of Guidance</h5>
+                    <p>No personalized career advice. We offer tailored guidance based on your unique skills, interests, and aspirations.</p>
+                </div>
+            </div>
+            <div class="col-md-4 animate-on-scroll" data-delay="0.3">
+                <div class="card feature-card">
+                    <img src="{{url_for('static',filename = 'skills.JPG')}}" class="card-img-top">
+                    <h5 class="fw-bold">Hidden Skill Gaps</h5>
+                    <p>Unaware of your improvement areas? We identify skill gaps and provide actionable plans to bridge them.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="container mt-5 pt-5">
+        <div class="text-center mb-5 animate-on-scroll">
+            <h2 class="section-title">Our Key Features</h2>
+            <p class="section-subtitle">Designed to guide you step by step towards your dream career</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 animate-on-scroll" data-delay="0.1">
+                <div class="card feature-card text-center">
+                    <div class="card-body">
+                        <div class="feature-icon mx-auto">
+                            <i class="bi bi-clipboard-data"></i>
+                        </div>
+                        <h5 class="fw-bold">Skill-Based Evaluation</h5>
+                        <p class="text-muted">
+                            Assess your technical, analytical and personal skills through structured, industry-relevant evaluation.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 animate-on-scroll" data-delay="0.2">
+                <div class="card feature-card text-center">
+                    <div class="card-body">
+                        <div class="feature-icon accent mx-auto">
+                            <i class="bi bi-briefcase"></i>
+                        </div>
+                        <h5 class="fw-bold">Career Matching</h5>
+                        <p class="text-muted">
+                            Matches your skills and interests with suitable career options using advanced algorithms.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 animate-on-scroll" data-delay="0.3">
+                <div class="card feature-card text-center">
+                    <div class="card-body">
+                        <div class="feature-icon mx-auto">
+                            <i class="bi bi-bar-chart"></i>
+                        </div>
+                        <h5 class="fw-bold">Gap Analysis</h5>
+                        <p class="text-muted">
+                            Identifies gaps between your current skills and industry requirements with precision.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 animate-on-scroll" data-delay="0.4">
+                <div class="card feature-card text-center">
+                    <div class="card-body">
+                        <div class="feature-icon accent mx-auto">
+                            <i class="bi bi-map"></i>
+                        </div>
+                        <h5 class="fw-bold">Improvement Plan</h5>
+                        <p class="text-muted">
+                            Provides a personalized roadmap with resources to improve skills and career readiness.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Modal -->
+    <div class="modal fade" id="how_it_work">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="head-title">HOW IT WORKS</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <h5><i class="bi bi-stars"></i>About CareerLens</h5>
+                    <p>
+                        CareerLens is a smart career guidance and skill analysis platform designed to help students make informed career decisions.
+                        Instead of providing generic suggestions, this application evaluates users based on their interests, job preferences, and actual skill levels.
+                    </p>
+                    <hr>
+
+                    <h5><i class="bi bi-bullseye"></i>Career-Oriented Skill Assessment</h5>
+                    <p>
+                        After login, users select their preferred career domain or job role.
+                        Based on this selection, the system presents skill-specific multiple-choice questions that evaluate relevant abilities rather than general knowledge.
+                    </p>
+                    <hr>
+
+                    <h5><i class="bi bi-bar-chart"></i>Skill Analysis & Career Insights</h5>
+                    <p>
+                        The application analyzes user responses to identify strengths, weaknesses, and overall skill readiness.
+                        A detailed career report is generated, including suitability scores, improvement areas, and alternative career options where applicable.
+                    </p>
+                    <hr>
+
+                    <h5><i class="bi bi-graph-up"></i>Learning & Skill Improvement Support</h5>
+                    <p>
+                        CareerLens also supports continuous learning by recommending curated learning resources and videos.
+                        These resources help users improve weak skill areas and prepare effectively for their desired career path.
+                    </p>
+                    <hr>
+
+                    <h5><i class="bi bi-rocket-takeoff"></i>Why CareerLens is Important</h5>
+                    <p>
+                        CareerLens reduces career confusion by combining skill assessment with data-driven career guidance.
+                        It enables students to understand their true potential and make confident career decisions based on structured analysis rather than assumptions.
+                        CareerLens bridges the gap between career aspirations and real-world skill readiness.
+                    </p>
+                    <hr>
+
+                    <p class="cta-text">
+                        Every great career begins with a single step. CareerLens is here to guide you, helping you understand your strengths, uncover hidden talents, and make confident choices for your future. Take this opportunity to explore your skills, discover the career that truly fits you, and start building the path to your dreams today.
+                    </p>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-primary-lg" data-bs-dismiss="modal">Get Started</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container text-center position-relative">
+            <h2 class="cta-title animate-on-scroll">Ready to find your perfect career?</h2>
+            <p class="cta-subtitle animate-on-scroll" data-delay="0.1">
+                Join thousands of students who have discovered their ideal career path with CareerLens
+            </p>
+            <a class="btn btn-outline-custom animate-on-scroll" href="/login" data-delay="0.2">Start Your Journey</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="mb-0">CareerLens | Smart Career Guidance System</p>
+            <p class="mb-0 mt-2"><small>© 2023 CareerLens. All rights reserved.</small></p>
+        </div>
+    </footer>
+
+    <script>
+        // Animation on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize animation on scroll
+            const animateElements = document.querySelectorAll('.animate-on-scroll');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Add delay if specified
+                        const delay = entry.target.getAttribute('data-delay') || 0;
+                        setTimeout(() => {
+                            entry.target.classList.add('animated');
+                        }, delay * 1000);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            
+            animateElements.forEach(el => observer.observe(el));
+            
+            // Add hover effect to cards
+            const cards = document.querySelectorAll('.feature-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+            
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.style.padding = '15px 0';
+                    navbar.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.05)';
+                } else {
+                    navbar.style.padding = '20px 0';
+                    navbar.style.boxShadow = 'none';
+                }
+            });
+            
+            // Modal open animation
+            const modal = document.getElementById('how_it_work');
+            modal.addEventListener('show.bs.modal', function() {
+                const modalContent = this.querySelector('.modal-content');
+                modalContent.style.transform = 'scale(0.95)';
+                modalContent.style.opacity = '0';
+                
+                setTimeout(() => {
+                    modalContent.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease';
+                    modalContent.style.transform = 'scale(1)';
+                    modalContent.style.opacity = '1';
+                }, 10);
+            });
+            
+            // Add ripple effect to buttons
+            const buttons = document.querySelectorAll('.btn-primary-custom, .btn-outline-custom, .btn-primary-lg');
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const x = e.clientX - e.target.getBoundingClientRect().left;
+                    const y = e.clientY - e.target.getBoundingClientRect().top;
+                    
+                    const ripple = document.createElement('span');
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.classList.add('ripple-effect');
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+            
+            // Add subtle animation to accent text underline
+            const accentText = document.querySelector('.accent-text');
+            if (accentText) {
+                setTimeout(() => {
+                    accentText.style.transition = 'all 0.3s ease';
+                    accentText.addEventListener('mouseenter', function() {
+                        const after = this.querySelector('::after') || this;
+                        after.style.transform = 'scaleX(1)';
+                    });
+                }, 1000);
+            }
+        });
+        
+        // Add ripple effect styles
+        const style = document.createElement('style');
+        style.textContent = `
+            .ripple-effect {
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(16, 185, 129, 0.3);
+                transform: scale(0);
+                animation: ripple 0.6s linear;
+                pointer-events: none;
+                width: 20px;
+                height: 20px;
+            }
+            
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+            
+            .btn-primary-custom, .btn-outline-custom, .btn-primary-lg {
+                position: relative;
+                overflow: hidden;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
+
+<!--
+Key Features:
+Minimal Monochrome Color Scheme (Option 11):
+
+Primary: #4b5563 (Gray)
+
+Secondary: #6b7280 (Light Gray)
+
+Accent: #10b981 (Emerald Green)
+
+Background: #ffffff (White)
+
+Dark: #1f2937 (Charcoal)
+
+All Animations Preserved:
+
+Logo floating animation
+
+Hero image 3D effect
+
+Scroll-triggered animations
+
+Card hover effects
+
+Button ripple effects
+
+Modal scale animation
+
+Navbar scroll effect
+
+Clean CareerLens Homepage Only:
+
+No syllabus JavaScript exercises
+
+Only original CareerLens content
+
+Working "How It Works" modal
+
+All Flask template tags intact
+
+Fully responsive design
+
+This is just the CareerLens homepage with the minimal monochrome color scheme and all animations - no extra syllabus content!
+
+
+-->

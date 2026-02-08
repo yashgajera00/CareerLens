@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment - CareerLens</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4b5563;
+            --accent: #10b981;
+            --dark: #1f2937;
+        }
+        
+        body {
+            background: #f9fafb;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .assessment-container {
+            max-width: 800px;
+            margin: 100px auto 50px;
+            padding: 20px;
+        }
+        
+        .assessment-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+        
+        .question-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid #e5e7eb;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .question-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        
+        .question-card.selected {
+            border-color: var(--accent);
+            background: #f0fdf4;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .btn-primary-custom {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary-custom:hover {
+            background: var(--dark);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/home-login">
+                <img src="{{url_for('static',filename = 'logo.png')}}" class="me-2" style="width: 40px; height: 40px;">
+                <strong>CareerLens</strong>
+            </a>
+            <div class="navbar-text">
+                Welcome, {{ user.name }}!
+            </div>
+        </div>
+    </nav>
+
+    <!-- Assessment Content -->
+    <div class="assessment-container">
+        <div class="assessment-card">
+            <h2 class="mb-4">{{ assessment_name }}</h2>
+            <p class="text-muted mb-4">Answer all questions to get your personalized career recommendations.</p>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            
+            <form id="assessmentForm" action="/submit-assessment" method="POST">
+                <input type="hidden" name="assessment_type" value="{{ assessment_type }}">
+                <input type="hidden" name="score" id="scoreInput" value="0">
+                
+                <!-- Career Test Questions -->
+                {% if assessment_type == 'career' %}
+                    <div class="question-card" onclick="selectAnswer(this, 25)">
+                        <h5>Question 1: Do you enjoy solving complex problems?</h5>
+                        <div class="options mt-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="q1">
+                                <label class="form-check-label">Yes, very much</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="question-card" onclick="selectAnswer(this, 25)">
+                        <h5>Question 2: Are you interested in technology and computers?</h5>
+                    </div>
+                    
+                    <div class="question-card" onclick="selectAnswer(this, 25)">
+                        <h5>Question 3: Do you prefer working in a team or alone?</h5>
+                    </div>
+                    
+                    <div class="question-card" onclick="selectAnswer(this, 25)">
+                        <h5>Question 4: Are you interested in business and management?</h5>
+                    </div>
+                
+                <!-- Aptitude Test Questions -->
+                {% elif assessment_type == 'aptitude' %}
+                    <div class="question-card" onclick="selectAnswer(this, 25)">
+                        <h5>Question 1: Logical reasoning ability</h5>
+                    </div>
+                    
+                    <div class="question-card" onclick="selectAnswer(this, 25)">
+                        <h5>Question 2: Numerical ability</h5>
+                    </div>
+                    
+                    <div class="question-card" onclick="selectAnswer(this, 25)">
+                        <h5>Question 3: Verbal ability</h5>
+                    </div>
+                    
+                    <div class="question-card" onclick="selectAnswer(this, 25)">
+                        <h5>Question 4: Spatial reasoning</h5>
+                    </div>
+                {% endif %}
+                
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="/home-login" class="btn btn-outline-secondary">Back to Dashboard</a>
+                    <button type="submit" class="btn-primary-custom" id="submitBtn" disabled>Submit Assessment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let selectedAnswers = 0;
+        let totalQuestions = 4;
+        let totalScore = 0;
+        
+        function selectAnswer(card, points) {
+            // Remove selected class from all cards
+            document.querySelectorAll('.question-card').forEach(c => {
+                c.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked card
+            card.classList.add('selected');
+            
+            // Update progress
+            selectedAnswers++;
+            totalScore += points;
+            
+            // Update progress bar
+            const progress = (selectedAnswers / totalQuestions) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            
+            // Update score input
+            document.getElementById('scoreInput').value = totalScore;
+            
+            // Enable submit button if all questions answered
+            if (selectedAnswers === totalQuestions) {
+                document.getElementById('submitBtn').disabled = false;
+            }
+        }
+        
+        // Form submission confirmation
+        document.getElementById('assessmentForm').addEventListener('submit', function(e) {
+            if (selectedAnswers < totalQuestions) {
+                e.preventDefault();
+                alert('Please answer all questions before submitting.');
+            } else {
+                if (confirm('Are you sure you want to submit the assessment?')) {
+                    return true;
+                } else {
+                    e.preventDefault();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

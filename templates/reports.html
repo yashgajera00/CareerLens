@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Reports - CareerLens</title>
+    
+    <!-- Bootstrap CSS & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #4b5563;
+            --primary-light: #6b7280;
+            --primary-dark: #374151;
+            --secondary: #6b7280;
+            --accent: #10b981;
+            --accent-light: #34d399;
+            --accent-dark: #059669;
+            --dark: #1f2937;
+            --light: #ffffff;
+            --gray-light: #f9fafb;
+            --gray-medium: #e5e7eb;
+            --text-dark: #111827;
+            --text-light: #6b7280;
+            --gradient-primary: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+            --gradient-accent: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --gradient-subtle: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+        }
+        
+        * {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        body {
+            background-color: var(--gray-light);
+            color: var(--text-dark);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            overflow-x: hidden;
+            padding-top: 80px;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+        
+        /* Navbar styles */
+        .navbar {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            border-bottom: 1px solid var(--gray-medium);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        .navbar-brand-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            margin-right: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--gray-medium);
+        }
+        
+        .navbar-brand strong {
+            color: var(--dark);
+            font-weight: 800;
+            font-size: 1.8rem;
+            letter-spacing: -0.5px;
+        }
+        
+        /* Reports Container */
+        .reports-container {
+            margin: 0 auto 50px;
+            max-width: 1200px;
+            padding: 30px;
+        }
+        
+        /* Page Header */
+        .page-header {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--gray-medium);
+        }
+        
+        .page-header h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .page-header p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+        
+        /* Stat Cards */
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid var(--gray-medium);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            border-color: var(--accent-light);
+        }
+        
+        .stat-card h3 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+        
+        .stat-card h6 {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+        
+        /* Chart Cards */
+        .chart-card {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--gray-medium);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            height: 100%;
+        }
+        
+        .chart-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            border-color: var(--accent-light);
+        }
+        
+        .chart-card h5 {
+            color: var(--dark);
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+        }
+        
+        /* AI Recommendation Card */
+        .ai-card {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--gray-medium);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            padding: 30px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(5, 150, 105, 0.05) 100%);
+            height: 100%;
+        }
+        
+        .ai-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            border-color: var(--accent-light);
+        }
+        
+        .ai-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+        
+        .ai-card h5 {
+            color: var(--dark);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .ai-card h3 {
+            color: var(--accent);
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+        
+        .ai-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+        
+        /* Badge Styles */
+        .badge-success {
+            background-color: var(--accent) !important;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        
+        .badge-danger {
+            background-color: #ef4444 !important;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        
+        /* Skill List */
+        .skill-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .skill-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray-medium);
+            color: var(--text-dark);
+        }
+        
+        .skill-list li:last-child {
+            border-bottom: none;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .reports-container {
+                padding: 20px 15px;
+            }
+            
+            .page-header {
+                padding: 25px 20px;
+            }
+            
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .stat-card h3 {
+                font-size: 1.8rem;
+            }
+            
+            .chart-card {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/home-login">
+                <img src="{{url_for('static',filename = 'logo.png')}}" class="navbar-brand-logo">
+                <strong>CareerLens</strong>
+            </a>
+            
+            <!-- Toggler for mobile -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/reports">Reports</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/resources">Resources</a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <a href="/profile" class="btn btn-outline-primary btn-sm me-2">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/logout" class="btn btn-outline-danger btn-sm">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="reports-container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1><i class="bi bi-bar-chart me-2"></i>Career Analytics Report</h1>
+            <p>Detailed insights and performance analysis of your career assessments</p>
+        </div>
+        
+        <!-- Stats Section -->
+        <div class="row g-3">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h6>Total Tests Completed</h6>
+                    <h3>{{ total_tests }}</h3>
+                    <i class="bi bi-clipboard-check float-end" style="color: var(--accent); font-size: 1.5rem;"></i>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h6>Average Score</h6>
+                    <h3>{{ avg_score }}%</h3>
+                    <i class="bi bi-graph-up float-end" style="color: var(--accent); font-size: 1.5rem;"></i>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h6>Best Performing Field</h6>
+                    {% if top_fields %}
+                        <h5>{{ top_fields[0] if top_fields|length > 0 else 'N/A' }}</h5>
+                        <span class="badge-success">{{ top_field_score }}%</span>
+                    {% else %}
+                        <h5>N/A</h5>
+                        <span class="badge-success">0%</span>
+                    {% endif %}
+                    <i class="bi bi-trophy float-end" style="color: var(--accent); font-size: 1.5rem;"></i>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h6>Area for Improvement</h6>
+                    {% if weak_fields %}
+                        <h5>{{ weak_fields[0] if weak_fields|length > 0 else 'N/A' }}</h5>
+                        <span class="badge-danger">{{ weak_field_score }}%</span>
+                    {% else %}
+                        <h5>N/A</h5>
+                        <span class="badge-danger">0%</span>
+                    {% endif %}
+                    <i class="bi bi-lightbulb float-end" style="color: #ef4444; font-size: 1.5rem;"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Skills Performance -->
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="chart-card">
+                    <h5><i class="bi bi-check-circle-fill me-2 text-success"></i>Strongest Skills</h5>
+                    {% if top_skills %}
+                        <ul class="skill-list">
+                            {% for skill in top_skills %}
+                                <li>
+                                    <i class="bi bi-check-circle text-success me-2"></i>
+                                    {{ skill }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="bi bi-clipboard-x fs-1 text-muted mb-3"></i>
+                            <p class="text-muted">No skill data available yet</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="chart-card">
+                    <h5><i class="bi bi-exclamation-circle-fill me-2 text-danger"></i>Areas for Development</h5>
+                    {% if weak_skills %}
+                        <ul class="skill-list">
+                            {% for skill in weak_skills %}
+                                <li>
+                                    <i class="bi bi-exclamation-circle text-danger me-2"></i>
+                                    {{ skill }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="bi bi-clipboard-x fs-1 text-muted mb-3"></i>
+                            <p class="text-muted">No skill data available yet</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Charts Section -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="chart-card">
+                    <h5><i class="bi bi-bar-chart me-2"></i>Field Performance Analysis</h5>
+                    <div style="position: relative; height: 300px;">
+                        <canvas id="fieldChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Skill Chart -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="chart-card">
+                    <h5><i class="bi bi-lightning-charge me-2"></i>Detailed Skill Performance</h5>
+                    <div style="position: relative; height: 300px;">
+                        <canvas id="skillChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Action Button -->
+        <div class="text-center mt-4">
+            <a href="/dashboard" class="btn btn-primary" style="background: var(--primary); border: none;">
+                <i class="bi bi-arrow-left me-2"></i>Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle & Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Graph colors based on theme
+            const primaryColor = '#4b5563';
+            const accentColor = '#10b981';
+            const gridColor = '#e5e7eb';
+            const textColor = '#6b7280';
+            
+            // Get data from template
+            const fieldData = {{ field_scores|tojson|safe }};
+            const skillData = {{ skill_scores|tojson|safe }};
+            
+            // Field Performance Chart
+            const fieldCtx = document.getElementById('fieldChart').getContext('2d');
+            const fieldChart = new Chart(fieldCtx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(fieldData),
+                    datasets: [{
+                        label: 'Score (%)',
+                        data: Object.values(fieldData),
+                        backgroundColor: accentColor,
+                        borderColor: accentColor,
+                        borderWidth: 1,
+                        borderRadius: 8,
+                        hoverBackgroundColor: '#059669',
+                        hoverBorderColor: '#059669'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(31, 41, 55, 0.9)',
+                            titleColor: '#ffffff',
+                            bodyColor: '#ffffff',
+                            borderColor: primaryColor,
+                            borderWidth: 1,
+                            cornerRadius: 8,
+                            callbacks: {
+                                label: function(context) {
+                                    return `Score: ${context.parsed.y}%`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: {
+                                color: gridColor,
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: textColor,
+                                font: {
+                                    size: 12
+                                },
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Score (%)',
+                                color: textColor
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: gridColor,
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: textColor,
+                                font: {
+                                    size: 12
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Career Fields',
+                                color: textColor
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Skill Performance Chart
+            const skillCtx = document.getElementById('skillChart').getContext('2d');
+            const skillChart = new Chart(skillCtx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(skillData),
+                    datasets: [{
+                        label: 'Score (%)',
+                        data: Object.values(skillData),
+                        backgroundColor: primaryColor,
+                        borderColor: primaryColor,
+                        borderWidth: 1,
+                        borderRadius: 8,
+                        hoverBackgroundColor: '#374151',
+                        hoverBorderColor: '#374151'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(31, 41, 55, 0.9)',
+                            titleColor: '#ffffff',
+                            bodyColor: '#ffffff',
+                            borderColor: primaryColor,
+                            borderWidth: 1,
+                            cornerRadius: 8,
+                            callbacks: {
+                                label: function(context) {
+                                    return `Score: ${context.parsed.y}%`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: {
+                                color: gridColor,
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: textColor,
+                                font: {
+                                    size: 12
+                                },
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Score (%)',
+                                color: textColor
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: gridColor,
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: textColor,
+                                font: {
+                                    size: 12
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Skills',
+                                color: textColor
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Add hover effect to cards
+            const cards = document.querySelectorAll('.stat-card, .chart-card, .ai-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

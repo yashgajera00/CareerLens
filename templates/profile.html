@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - CareerLens</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4b5563;
+            --accent: #10b981;
+        }
+        
+        body {
+            background: #f9fafb;
+        }
+        
+        .profile-container {
+            margin: 100px auto 50px;
+            max-width: 800px;
+            padding: 20px;
+        }
+        
+        .profile-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        
+        .profile-header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin: 0 auto 20px;
+        }
+        
+        .stats-card {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .btn-primary-custom {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/home-login">
+                <img src="{{url_for('static',filename = 'logo.png')}}" class="me-2" style="width: 40px; height: 40px;">
+                <strong>CareerLens</strong>
+            </a>
+            <div class="d-flex">
+                <a href="/home-login" class="btn btn-outline-secondary btn-sm me-2">Dashboard</a>
+                <a href="/logout" class="btn btn-outline-danger btn-sm">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="profile-container">
+        <div class="profile-card">
+            <div class="profile-header">
+                <div class="profile-pic">
+                    {{ user.name[0].upper() }}
+                </div>
+                <h2>{{ user.name }}</h2>
+                <p class="text-muted">{{ user.email }}</p>
+                <p class="text-muted">Member since: {{ user.created_at.strftime('%B %Y') }}</p>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-md-6 mb-3">
+                    <div class="stats-card">
+                        <h3>{{ total_assessments }}</h3>
+                        <p class="text-muted mb-0">Assessments Completed</p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="stats-card">
+                        <h3>{{ avg_score }}%</h3>
+                        <p class="text-muted mb-0">Average Score</p>
+                    </div>
+                </div>
+            </div>
+            
+            <form action="/update-profile" method="POST" class="mt-4">
+                <div class="mb-3">
+                    <label class="form-label">Bio</label>
+                    <textarea class="form-control" name="bio" rows="3">{{ user.bio }}</textarea>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Skills (comma separated)</label>
+                    <textarea class="form-control" name="skills" rows="2">{{ user.skills }}</textarea>
+                    <div class="form-text">Example: Python, Communication, Leadership, Problem Solving</div>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Interests</label>
+                    <textarea class="form-control" name="interests" rows="2">{{ user.interests }}</textarea>
+                    <div class="form-text">Example: Artificial Intelligence, Entrepreneurship, Design</div>
+                </div>
+                
+                <div class="d-flex justify-content-between">
+                    <a href="/home-login" class="btn btn-outline-secondary">Back</a>
+                    <button type="submit" class="btn-primary-custom">Update Profile</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
