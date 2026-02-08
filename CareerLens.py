@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.secret_key = "abc"
 
 # ================= DATABASE CONFIG =================
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:zSolgKTBDPWVolsSoYRiYsGoGyzFMlo1@mysql.railway.internal:3306/railway'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:PASSWORD@HOST:PORT/railway'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
