@@ -781,13 +781,26 @@ def reports():
 
     top_fields = []
     weak_fields = []
+    top_field_score = 0
+    weak_field_score = 0
 
     if field_scores:
-        max_score = max(field_scores.values())
-        min_score = min(field_scores.values())
 
-        top_fields = [f for f,s in field_scores.items() if s == max_score]
-        weak_fields = [f for f,s in field_scores.items() if s == min_score]
+        # 60+ fields only for best
+        eligible_fields = {f: s for f, s in field_scores.items() if s >= 60}
+
+        if eligible_fields:
+            max_score = max(eligible_fields.values())
+            top_fields = [f for f, s in eligible_fields.items() if s == max_score]
+            top_field_score = max_score
+
+        # Improvement fields = <60
+        improvement_fields = {f: s for f, s in field_scores.items() if s < 60}
+
+        if improvement_fields:
+            min_score = min(improvement_fields.values())
+            weak_fields = [f for f, s in improvement_fields.items() if s == min_score]
+            weak_field_score = min_score
 
     top_skills = []
     weak_skills = []
@@ -807,6 +820,8 @@ def reports():
         skill_scores=skill_scores,
         top_fields=top_fields,
         weak_fields=weak_fields,
+        top_field_score=top_field_score,
+        weak_field_score=weak_field_score,
         top_skills=top_skills,
         weak_skills=weak_skills
     )

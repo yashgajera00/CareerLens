@@ -709,7 +709,11 @@ h1,h2,h3,h4,h5,h6 {
                 <div class="stat-card">
                     <h6>Best Performing Field</h6>
                     {% if top_fields %}
-                        <h5>{{ top_fields[0] if top_fields|length > 0 else 'N/A' }}</h5>
+                        <h5>
+                            {% for field in top_fields %}
+                                {{ field }}<br>
+                            {% endfor %}
+                        </h5>
                         <span class="badge-success">{{ top_field_score }}%</span>
                     {% else %}
                         <h5>N/A</h5>
@@ -723,7 +727,11 @@ h1,h2,h3,h4,h5,h6 {
                 <div class="stat-card">
                     <h6>Area for Improvement</h6>
                     {% if weak_fields %}
-                        <h5>{{ weak_fields[0] if weak_fields|length > 0 else 'N/A' }}</h5>
+                        <h5>
+                            {% for field in weak_fields %}
+                                {{ field }}<br>
+                            {% endfor %}
+                        </h5>
                         <span class="badge-danger">{{ weak_field_score }}%</span>
                     {% else %}
                         <h5>N/A</h5>
