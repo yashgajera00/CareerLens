@@ -8,108 +8,472 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         :root {
-            --primary: #4b5563;
-            --accent: #10b981;
-            --danger: #ef4444;
-            --success: #10b981;
+            --primary: rgba(168,85,247,0.9);
+            --primary-light: rgba(196,181,253,0.8);
+            --primary-dark: rgba(109,40,217,1);
+            --accent: rgba(236,72,153,0.9);
+            --dark: #0f0c29;
+            --light: rgba(255,255,255,0.08);
+            --text-dark: #ffffff;
+            --text-light: #c7d2fe;
+            --gradient-primary: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
+            --gradient-accent: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --gradient-danger: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+        
+        * {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         body {
-            background: #f9fafb;
+            background: linear-gradient(135deg, #0b0b0f 0%, #12121a 50%, #0a0a12 100%);
+            background-attachment: fixed;
+            color: #ffffff;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            overflow-x: hidden;
+            padding-top: 60px; /* Changed from 80px to match resources.html */
         }
         
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1a1a2e;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+        
+        /* Navbar - Updated to match resources.html */
+        .navbar {
+            background: rgba(255,255,255,0.2) !important;
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(255,255,255,0.25);
+            padding: 10px 0; /* Changed from 20px to match resources.html */
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        .navbar-brand-logo {
+            width: 32px; /* Changed from 40px to match resources.html */
+            height: 32px; /* Changed from 40px to match resources.html */
+            border-radius: 10px; /* Changed from 12px to match resources.html */
+            margin-right: 10px; /* Changed from 12px to match resources.html */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            /* Removed animation to prevent scrolling/float effect */
+        }
+        
+        .navbar-brand strong {
+            color: #ffffff !important;
+            font-weight: 800;
+            font-size: 1.5rem; /* Changed from 1.8rem to match resources.html */
+            letter-spacing: -0.5px;
+        }
+        
+        /* Updated nav link styles to match resources.html */
+        .nav-link {
+            color: rgba(255,255,255,0.9) !important;
+            font-weight: 500;
+            position: relative;
+            padding: 8px 0 !important;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-light) !important;
+        }
+        
+        /* Review Container */
         .review-container {
             max-width: 1000px;
-            margin: 100px auto 50px;
+            margin: 30px auto 50px;
             padding: 20px;
         }
         
+        /* Review Card */
         .review-card {
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 0 40px rgba(168,85,247,0.15);
+            animation: fadeInUp 0.8s ease-out;
         }
         
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Score Summary */
+        .score-alert {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(168,85,247,0.3);
+            border-left: 4px solid var(--primary);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .score-alert h4 {
+            color: #ffffff;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+        
+        .score-alert p {
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 0;
+        }
+        
+        /* Question Review Cards */
         .question-review {
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            transition: all 0.3s;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .question-review:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(168, 85, 247, 0.2);
+            border-color: var(--accent);
         }
         
         .question-review.correct {
-            border-left: 4px solid var(--success);
+            border-left: 4px solid #10b981;
+            background: rgba(16,185,129,0.05);
         }
         
         .question-review.incorrect {
-            border-left: 4px solid var(--danger);
+            border-left: 4px solid #ef4444;
+            background: rgba(239,68,68,0.05);
         }
         
+        /* Status Badges */
         .status-badge {
-            padding: 5px 15px;
+            padding: 8px 20px;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
+            display: inline-flex;
+            align-items: center;
         }
         
         .status-correct {
-            background: #d1fae5;
-            color: var(--success);
+            background: rgba(16,185,129,0.2);
+            color: #10b981;
+            border: 1px solid rgba(16,185,129,0.3);
         }
         
         .status-incorrect {
-            background: #fee2e2;
-            color: var(--danger);
+            background: rgba(239,68,68,0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239,68,68,0.3);
+        }
+        
+        /* Answer Cards */
+        .answer-card {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            padding: 20px;
+            backdrop-filter: blur(6px);
+        }
+        
+        .answer-card h6 {
+            color: #ffffff;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        
+        .answer-card p {
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+        
+        .user-answer-correct {
+            background: rgba(16,185,129,0.15);
+            border: 1px solid rgba(16,185,129,0.3);
+        }
+        
+        .user-answer-incorrect {
+            background: rgba(239,68,68,0.15);
+            border: 1px solid rgba(239,68,68,0.3);
+        }
+        
+        .correct-answer {
+            background: rgba(16,185,129,0.2);
+            border: 1px solid rgba(16,185,129,0.4);
+        }
+        
+        /* Buttons */
+        .btn-success {
+            background: var(--gradient-success);
+            border: none;
+            border-radius: 8px;
+            padding: 12px 30px;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(16,185,129,0.3);
+            color: white;
+        }
+        
+        /* Performance Summary */
+        .performance-summary {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .performance-item {
+            text-align: center;
+            background: rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 20px;
+            min-width: 150px;
+        }
+        
+        .performance-item h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+        
+        .performance-item.correct h3 {
+            color: #10b981;
+        }
+        
+        .performance-item.incorrect h3 {
+            color: #ef4444;
+        }
+        
+        .performance-item p {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+        
+        /* Question Navigation */
+        .question-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        
+        .question-dot {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            text-decoration: none;
+            color: rgba(255,255,255,0.9);
+            transition: all 0.3s ease;
+        }
+        
+        .question-dot.correct {
+            background: rgba(16,185,129,0.2);
+            color: #10b981;
+            border: 2px solid #10b981;
+        }
+        
+        .question-dot.incorrect {
+            background: rgba(239,68,68,0.2);
+            color: #ef4444;
+            border: 2px solid #ef4444;
+        }
+        
+        .question-dot:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(168,85,247,0.3);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .review-container {
+                padding: 15px;
+            }
+            
+            .review-card {
+                padding: 25px 20px;
+            }
+            
+            .performance-summary {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .question-nav {
+                gap: 8px;
+            }
+            
+            .question-dot {
+                width: 35px;
+                height: 35px;
+            }
+        }
+        
+        /* Ripple effect */
+        .btn-success {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(236, 72, 153, 0.3);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+        
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+    <!-- Navbar - Matched with resources.html style -->
+    <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="/home-login">
-                <img src="{{url_for('static',filename = 'logo.png')}}" class="me-2" style="width: 40px; height: 40px;">
+                <img src="{{url_for('static',filename = 'logo.png')}}" class="navbar-brand-logo">
                 <strong>CareerLens</strong>
             </a>
-            <div class="navbar-text">
-                Welcome, {{ user.name }}!
+            
+            <!-- Toggler for mobile -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+                    <li class="nav-item m-2">
+                        <a class="nav-link" href="/home-login">Dashboard</a>
+                    </li>
+                    <li class="nav-item m-2">
+                        <a class="nav-link" href="/reports">Reports</a>
+                    </li>
+                    <li class="nav-item m-2">
+                        <a class="nav-link" href="/resources">Resources</a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <a href="/profile" class="btn btn-outline-primary btn-sm me-2">Profile</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
 
     <div class="review-container">
         <div class="review-card">
-            <h2 class="mb-4">Test Review</h2>
+            <!-- Page Header -->
+            <div class="page-header mb-4">
+                <h1><i class="bi bi-clipboard-check me-2"></i>Test Review</h1>
+                <p class="text-muted">Detailed review of your assessment performance</p>
+            </div>
+            
+            <!-- Performance Summary -->
+            <div class="performance-summary">
+                <div class="performance-item correct">
+                    <h3>{{ total_score }}</h3>
+                    <p>Your Score</p>
+                </div>
+                <div class="performance-item">
+                    <h3>{{ percentage|int }}%</h3>
+                    <p>Percentage</p>
+                </div>
+                <div class="performance-item">
+                    <h3>{{ questions|length }}</h3>
+                    <p>Total Questions</p>
+                </div>
+            </div>
             
             <!-- Score Summary -->
-            <div class="alert alert-info mb-4">
-                <h4>Your Score: {{ total_score }}/100 ({{ percentage|int }}%)</h4>
-                <p class="mb-0">Review your answers below. You can go back to any question by clicking on the question number.</p>
+            <div class="score-alert">
+                <h4>Assessment Review Complete! 🎯</h4>
+                <p>Review your answers below. You scored <strong>{{ total_score }}/100 ({{ percentage|int }}%)</strong>. 
+                Click on question numbers to jump to specific questions.</p>
+            </div>
+            
+            <!-- Question Navigation Dots -->
+            <div class="question-nav">
+                {% for q in questions %}
+                <a href="#question-{{ q.number }}" class="question-dot {% if q.is_correct %}correct{% else %}incorrect{% endif %}">
+                    {{ q.number }}
+                </a>
+                {% endfor %}
             </div>
             
             <!-- Questions Review -->
             {% for q in questions %}
-            <div class="question-review {% if q.is_correct %}correct{% else %}incorrect{% endif %}">
-                <div class="d-flex justify-content-between align-items-start mb-3">
-                    <h5>Question {{ q.number }}</h5>
+            <div id="question-{{ q.number }}" class="question-review {% if q.is_correct %}correct{% else %}incorrect{% endif %}">
+                <div class="d-flex justify-content-between align-items-start mb-4">
+                    <div>
+                        <h5 class="mb-2">Question {{ q.number }}</h5>
+                        <p class="mb-0"><strong>Skill:</strong> <span class="badge bg-primary">{{ q.question.skill }}</span></p>
+                    </div>
                     <span class="status-badge {% if q.is_correct %}status-correct{% else %}status-incorrect{% endif %}">
                         {% if q.is_correct %}
-                            <i class="bi bi-check-circle me-1"></i> Correct
+                            <i class="bi bi-check-circle-fill me-2"></i> Correct
                         {% else %}
-                            <i class="bi bi-x-circle me-1"></i> Incorrect
+                            <i class="bi bi-x-circle-fill me-2"></i> Incorrect
                         {% endif %}
                     </span>
                 </div>
                 
-                <p class="mb-3"><strong>Q:</strong> {{ q.question.question_text }}</p>
+                <p class="mb-4"><strong>Q:</strong> {{ q.question.question }}</p>
                 
-                <div class="row">
+                <div class="row g-4">
+                    <!-- Your Answer -->
                     <div class="col-md-6">
-                        <div class="p-3 rounded {% if q.is_correct %}bg-success-subtle{% else %}bg-danger-subtle{% endif %}">
-                            <h6>Your Answer</h6>
-                            <p class="mb-0">
+                        <div class="answer-card {% if q.is_correct %}user-answer-correct{% else %}user-answer-incorrect{% endif %}">
+                            <h6><i class="bi bi-person-circle me-2"></i>Your Answer</h6>
+                            <p class="mb-2">
                                 <strong>{{ q.user_answer }}.</strong> 
                                 {% if q.user_answer == 'A' %}{{ q.question.option_a }}
                                 {% elif q.user_answer == 'B' %}{{ q.question.option_b }}
@@ -117,14 +481,20 @@
                                 {% elif q.user_answer == 'D' %}{{ q.question.option_d }}
                                 {% endif %}
                             </p>
+                            {% if not q.is_correct %}
+                            <small class="text-danger"><i class="bi bi-exclamation-circle me-1"></i>Incorrect selection</small>
+                            {% else %}
+                            <small class="text-success"><i class="bi bi-check-circle me-1"></i>Well done!</small>
+                            {% endif %}
                         </div>
                     </div>
                     
+                    <!-- Correct Answer (shown only if incorrect) -->
                     {% if not q.is_correct %}
                     <div class="col-md-6">
-                        <div class="p-3 rounded bg-success-subtle">
-                            <h6>Correct Answer</h6>
-                            <p class="mb-0">
+                        <div class="answer-card correct-answer">
+                            <h6><i class="bi bi-check-circle-fill me-2"></i>Correct Answer</h6>
+                            <p class="mb-2">
                                 <strong>{{ q.correct_answer }}.</strong> 
                                 {% if q.correct_answer == 'A' %}{{ q.question.option_a }}
                                 {% elif q.correct_answer == 'B' %}{{ q.question.option_b }}
@@ -132,25 +502,150 @@
                                 {% elif q.correct_answer == 'D' %}{{ q.question.option_d }}
                                 {% endif %}
                             </p>
+                            <small class="text-success"><i class="bi bi-lightbulb me-1"></i>Remember this for next time</small>
                         </div>
                     </div>
                     {% endif %}
                 </div>
                 
+                <!-- Explanation (if available) -->
+                {% if q.question.explanation %}
+                <div class="mt-4 p-3 rounded" style="background: rgba(168,85,247,0.1); border: 1px solid rgba(168,85,247,0.3);">
+                    <h6><i class="bi bi-info-circle me-2"></i>Explanation</h6>
+                    <p class="mb-0">{{ q.question.explanation }}</p>
+                </div>
+                {% endif %}
             </div>
             {% endfor %}
-
+            
             <!-- Action Buttons -->
-            <div class="d-flex justify-content-end mt-4">
-                <a href="/home-login" class="btn btn-success">
-                    <i class="bi bi-house me-2"></i> Back to Dashboard
-                </a>
+            <div class="d-flex justify-content-between mt-5 pt-4 border-top border-secondary">
+                <div>
+                    <a href="/assessment/career/start" class="btn btn-outline-primary">
+                        <i class="bi bi-arrow-repeat me-2"></i>Retake Test
+                    </a>
+                </div>
+                <div>
+                    <a href="/home-login" class="btn btn-success">
+                        <i class="bi bi-house me-2"></i> Back to Dashboard
+                    </a>
+                </div>
             </div>
-
-            </div>
-            </div>
-
         </div>
     </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add smooth scrolling for question navigation
+            document.querySelectorAll('.question-dot').forEach(dot => {
+                dot.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Add highlight effect
+                        targetElement.style.boxShadow = '0 0 0 3px rgba(168,85,247,0.3)';
+                        setTimeout(() => {
+                            targetElement.style.boxShadow = '';
+                        }, 1000);
+                    }
+                });
+            });
+            
+            // Add ripple effect to buttons
+            const buttons = document.querySelectorAll('.btn-success, .btn-outline-primary, .btn-outline-info');
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const x = e.clientX - e.target.getBoundingClientRect().left;
+                    const y = e.clientY - e.target.getBoundingClientRect().top;
+                    
+                    const ripple = document.createElement('span');
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.classList.add('ripple-effect');
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+            
+            // Removed navbar scroll effect to match resources.html
+            
+            // Add animation to review cards on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            document.querySelectorAll('.question-review').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+            
+            // Highlight incorrect questions by default
+            document.querySelectorAll('.question-review.incorrect').forEach(card => {
+                card.style.animation = 'pulse 2s infinite';
+            });
+            
+            // Add CSS for pulse animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes pulse {
+                    0% { border-color: rgba(239,68,68,0.5); }
+                    50% { border-color: rgba(239,68,68,0.8); }
+                    100% { border-color: rgba(239,68,68,0.5); }
+                }
+                
+                .btn-outline-primary {
+                    border: 2px solid rgba(255,255,255,0.4);
+                    color: #ffffff;
+                    background: transparent;
+                }
+                
+                .btn-outline-primary:hover {
+                    background: rgba(168,85,247,0.2);
+                    border-color: var(--primary);
+                }
+                
+                .btn-outline-info {
+                    border: 2px solid rgba(59,130,246,0.4);
+                    color: #3b82f6;
+                    background: transparent;
+                }
+                
+                .btn-outline-info:hover {
+                    background: rgba(59,130,246,0.2);
+                    border-color: #3b82f6;
+                    color: #ffffff;
+                }
+                
+                .badge.bg-primary {
+                    background: var(--gradient-primary) !important;
+                    border: none;
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
 </body>
 </html>

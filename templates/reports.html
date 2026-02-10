@@ -10,36 +10,34 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     
     <style>
-        :root {
-            --primary: #4b5563;
-            --primary-light: #6b7280;
-            --primary-dark: #374151;
-            --secondary: #6b7280;
-            --accent: #10b981;
-            --accent-light: #34d399;
-            --accent-dark: #059669;
-            --dark: #1f2937;
-            --light: #ffffff;
-            --gray-light: #f9fafb;
-            --gray-medium: #e5e7eb;
-            --text-dark: #111827;
-            --text-light: #6b7280;
-            --gradient-primary: linear-gradient(135deg, #4b5563 0%, #374151 100%);
-            --gradient-accent: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            --gradient-subtle: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
-        }
+        
+:root {
+    --primary: rgba(168,85,247,0.9);
+    --primary-light: rgba(196,181,253,0.8);
+    --primary-dark: rgba(109,40,217,1);
+    --accent: rgba(236,72,153,0.9);
+    --dark: #0f0c29;
+    --light: rgba(255,255,255,0.08);
+    --text-dark: #ffffff;
+    --text-light: #c7d2fe;
+}
+
         
         * {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        body {
-            background-color: var(--gray-light);
-            color: var(--text-dark);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            overflow-x: hidden;
-            padding-top: 80px;
-        }
+        
+
+body {
+    background: linear-gradient(135deg, #0b0b0f 0%, #12121a 50%, #0a0a12 100%);
+    background-attachment: fixed;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    padding-top: 60px; /* Reduced from 80px to 60px */
+}
+
+
         
         /* Custom scrollbar */
         ::-webkit-scrollbar {
@@ -60,12 +58,12 @@
             background: var(--primary-dark);
         }
         
-        /* Navbar styles */
+        /* Navbar styles - Lighter background */
         .navbar {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            padding: 20px 0;
-            border-bottom: 1px solid var(--gray-medium);
+            background: rgba(255,255,255,0.2) !important;
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255,255,255,0.25);
+            padding: 10px 0; /* Reduced from 20px 0 to 10px 0 */
             position: fixed;
             top: 0;
             width: 100%;
@@ -73,10 +71,10 @@
         }
         
         .navbar-brand-logo {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            margin-right: 12px;
+            width: 32px; /* Reduced from 40px to 32px */
+            height: 32px; /* Reduced from 40px to 32px */
+            border-radius: 10px; /* Reduced from 12px to 10px */
+            margin-right: 10px; /* Reduced from 12px to 10px */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             border: 1px solid var(--gray-medium);
         }
@@ -84,50 +82,74 @@
         .navbar-brand strong {
             color: var(--dark);
             font-weight: 800;
-            font-size: 1.8rem;
+            font-size: 1.5rem; /* Reduced from 1.8rem to 1.5rem */
             letter-spacing: -0.5px;
         }
         
-        /* Reports Container */
-        .reports-container {
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 25px;
+            font-weight: 600;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        /* Dashboard Container */
+        .dashboard-container {
             margin: 0 auto 50px;
             max-width: 1200px;
             padding: 30px;
         }
         
-        /* Page Header */
-        .page-header {
-            background: white;
+        /* Welcome Card */
+        .welcome-card {
+            
+background: rgba(255,255,255,0.06);
+backdrop-filter: blur(20px);
+border: 1px solid rgba(255,255,255,0.12);
+box-shadow: 0 0 40px rgba(168,85,247,0.15);
+
             border-radius: 16px;
-            padding: 30px;
+            padding: 40px;
             margin-bottom: 30px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
             border: 1px solid var(--gray-medium);
+            position: relative;
+            overflow: hidden;
         }
         
-        .page-header h1 {
-            font-size: 2.2rem;
+        .welcome-card h1 {
+            font-size: 2.5rem;
             font-weight: 800;
             margin-bottom: 10px;
             color: var(--dark);
         }
         
-        .page-header p {
+        .welcome-card p {
             color: var(--text-light);
             font-size: 1.1rem;
         }
         
         /* Stat Cards */
         .stat-card {
-            background: white;
+            
+background: rgba(255,255,255,0.06);
+backdrop-filter: blur(20px);
+border: 1px solid rgba(255,255,255,0.12);
+box-shadow: 0 0 40px rgba(168,85,247,0.15);
+
             border-radius: 12px;
             padding: 25px;
+            margin-bottom: 25px;
             border: 1px solid var(--gray-medium);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
             position: relative;
             overflow: hidden;
-            height: 100%;
         }
         
         .stat-card::before {
@@ -141,9 +163,9 @@
         }
         
         .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-            border-color: var(--accent-light);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(168, 85, 247, 0.2);
+            border-color: var(--accent);
         }
         
         .stat-card h3 {
@@ -153,136 +175,480 @@
             margin-bottom: 8px;
         }
         
-        .stat-card h6 {
+        .stat-card p {
             color: var(--text-light);
             font-size: 0.95rem;
-            margin-bottom: 15px;
+            margin-bottom: 0;
         }
         
-        /* Chart Cards */
-        .chart-card {
-            background: white;
+        /* Main Cards */
+        .dashboard-card {
+            
+background: rgba(255,255,255,0.06);
+backdrop-filter: blur(20px);
+border: 1px solid rgba(255,255,255,0.12);
+box-shadow: 0 0 40px rgba(168,85,247,0.15);
+
             border-radius: 12px;
             border: 1px solid var(--gray-medium);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
-            padding: 25px;
-            margin-bottom: 25px;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
             height: 100%;
+            position: relative;
+            overflow: hidden;
         }
         
-        .chart-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-            border-color: var(--accent-light);
+        .dashboard-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(168, 85, 247, 0.2);
+            border-color: var(--accent);
         }
         
-        .chart-card h5 {
+        .card-header {
+            background: rgba(255,255,255,0.08);
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+            padding: 25px;
+        }
+        
+        .card-header h5 {
             color: var(--dark);
             font-weight: 700;
             font-size: 1.3rem;
-            margin-bottom: 20px;
-        }
-        
-        /* AI Recommendation Card */
-        .ai-card {
-            background: white;
-            border-radius: 12px;
-            border: 1px solid var(--gray-medium);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
-            padding: 30px;
-            text-align: center;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(5, 150, 105, 0.05) 100%);
-            height: 100%;
-        }
-        
-        .ai-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-            border-color: var(--accent-light);
-        }
-        
-        .ai-icon {
-            font-size: 2.5rem;
-            color: var(--accent);
-            margin-bottom: 20px;
-        }
-        
-        .ai-card h5 {
-            color: var(--dark);
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-        
-        .ai-card h3 {
-            color: var(--accent);
-            font-weight: 800;
-            margin-bottom: 15px;
-        }
-        
-        .ai-card p {
-            color: var(--text-light);
-            font-size: 0.95rem;
-        }
-        
-        /* Badge Styles */
-        .badge-success {
-            background-color: var(--accent) !important;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-        
-        .badge-danger {
-            background-color: #ef4444 !important;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-        
-        /* Skill List */
-        .skill-list {
-            list-style: none;
-            padding: 0;
             margin: 0;
         }
         
-        .skill-list li {
-            padding: 10px 0;
-            border-bottom: 1px solid var(--gray-medium);
+        .card-body {
+            padding: 25px;
+        }
+        
+        /* Assessment Buttons */
+        .btn-assessment {
+            background: transparent;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-weight: 600;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-assessment:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(75, 85, 99, 0.1);
+        }
+        
+        /* List Group */
+        .list-group-item {
+            border: 1px solid rgba(255,255,255,0.12);
+            padding: 15px 20px;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.06);
+        }
+        
+        .list-group-item:hover {
+            background: rgba(255,255,255,0.12);
+            border-color: var(--accent);
+            transform: translateX(5px);
+        }
+        
+        /* Table Styling */
+        .table {
+            margin-bottom: 0;
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(6px);
+            border-radius: 10px;
+        }
+        
+        .table thead th {
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+            color: var(--dark);
+            font-weight: 700;
+            padding: 15px;
+            background: rgba(255,255,255,0.08);
+        }
+        
+        .table tbody tr {
+            transition: all 0.3s ease;
+        }
+        
+        .table tbody tr:hover {
+            background: rgba(255,255,255,0.08);
+        }
+        
+        .table tbody td {
+            padding: 15px;
+            border-color: rgba(255,255,255,0.12);
             color: var(--text-dark);
         }
         
-        .skill-list li:last-child {
-            border-bottom: none;
+        /* Quick Links */
+        .quick-link-card {
+            
+background: rgba(255,255,255,0.06);
+backdrop-filter: blur(20px);
+border: 1px solid rgba(255,255,255,0.12);
+box-shadow: 0 0 40px rgba(168,85,247,0.15);
+
+            border-radius: 12px;
+            border: 1px solid var(--gray-medium);
+            padding: 40px 20px;
+            text-align: center;
+            height: 100%;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+        }
+        
+        .quick-link-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(168, 85, 247, 0.2);
+            border-color: var(--accent);
+        }
+        
+        .quick-link-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .quick-link-card h5 {
+            color: var(--dark);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .quick-link-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
         }
         
         /* Responsive */
         @media (max-width: 768px) {
-            .reports-container {
+            .dashboard-container {
                 padding: 20px 15px;
             }
             
-            .page-header {
-                padding: 25px 20px;
+            .welcome-card {
+                padding: 30px 20px;
             }
             
-            .page-header h1 {
-                font-size: 1.8rem;
+            .welcome-card h1 {
+                font-size: 2rem;
             }
             
             .stat-card h3 {
                 font-size: 1.8rem;
             }
-            
-            .chart-card {
-                padding: 20px 15px;
-            }
         }
-    </style>
+    
+/* Readable font fix for glass UI */
+body {
+    color: #ffffff;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #ffffff !important;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+p, span, li {
+    color: rgba(255,255,255,0.9) !important;
+}
+
+.navbar a,
+.nav-link {
+    color: #ffffff !important;
+}
+
+.stat-card h3 {
+    color: #ffffff !important;
+    font-size: 2.3rem;
+}
+
+.dashboard-card p {
+    color: rgba(255,255,255,0.88) !important;
+}
+
+
+/* GLOBAL TEXT FIX */
+body, p, span, li, label {
+    color: rgba(255,255,255,0.92) !important;
+}
+
+/* HEADINGS */
+h1,h2,h3,h4,h5,h6 {
+    color: #ffffff !important;
+}
+
+/* NAVBAR BRAND */
+.navbar-brand strong {
+    color: #ffffff !important;
+}
+
+/* MUTED TEXT FIX */
+.text-muted {
+    color: rgba(255,255,255,0.75) !important;
+}
+
+/* STAT LABELS */
+.stat-card p {
+    color: rgba(255,255,255,0.8) !important;
+}
+
+/* RECOMMENDED FIELD LIST */
+.list-group-item {
+    background: rgba(255,255,255,0.08) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+}
+
+/* MODAL FIX */
+.modal-content {
+    background: #0f0c29 !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255,255,255,0.15);
+}
+
+.modal-header, .modal-footer {
+    border-color: rgba(255,255,255,0.15) !important;
+}
+
+/* BUTTONS */
+.btn-assessment {
+    color: #ffffff !important;
+    border-color: rgba(255,255,255,0.3) !important;
+}
+
+.btn-assessment:hover {
+    background: rgba(168,85,247,0.2) !important;
+}
+
+/* QUICK TEXT UNDER WELCOME */
+.welcome-card p {
+    color: rgba(255,255,255,0.8) !important;
+}
+
+
+/* Assessment table readability */
+.table {
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(6px);
+}
+
+.table thead th {
+    color: #ffffff !important;
+    border-bottom: 1px solid rgba(255,255,255,0.25);
+}
+
+.table tbody td {
+    color: rgba(255,255,255,0.92) !important;
+}
+
+.table tbody tr:hover {
+    background: rgba(255,255,255,0.08);
+}
+
+/* Buttons inside assessment */
+.btn-outline-primary {
+    color: #ffffff !important;
+    border-color: rgba(255,255,255,0.35) !important;
+}
+
+.btn-outline-primary:hover {
+    background: rgba(168,85,247,0.25);
+}
+
+
+/* NAVBAR - Lighter background */
+.navbar {
+    background: rgba(255,255,255,0.2) !important;
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255,255,255,0.25);
+}
+
+.navbar-brand strong {
+    color: #ffffff !important;
+}
+
+.nav-link {
+    color: #ffffff !important;
+}
+
+.nav-link:hover {
+    color: var(--primary-light) !important;
+}
+
+/* RECENT ASSESSMENT FIX */
+.table {
+    background: rgba(0,0,0,0.35) !important;
+    backdrop-filter: blur(8px);
+    border-radius: 10px;
+}
+
+.table thead th {
+    color: #ffffff !important;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.table tbody td {
+    color: rgba(255,255,255,0.95) !important;
+}
+
+.table tbody tr:hover {
+    background: rgba(255,255,255,0.08);
+}
+
+.badge {
+    background: #22c55e !important;
+    color: white !important;
+}
+
+
+/* Assessment card style */
+.assessment-card {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    color: #ffffff;
+}
+.assessment-card:hover {
+    background: rgba(255,255,255,0.12);
+}
+
+
+.assessment-photo-row {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    backdrop-filter: blur(6px);
+    color: #ffffff;
+}
+.assessment-photo-row:hover {
+    background: rgba(255,255,255,0.10);
+}
+.assessment-date {
+    color: rgba(255,255,255,0.7);
+}
+.assessment-view-btn {
+    border-color: rgba(255,255,255,0.4);
+    color: #ffffff;
+}
+.assessment-view-btn:hover {
+    background: rgba(255,255,255,0.15);
+}
+
+
+
+/* ===== REPORT PAGE SPECIFIC STYLES ===== */
+
+.reports-container {
+    margin: 0 auto 50px;
+    max-width: 1200px;
+    padding: 30px;
+}
+
+.page-header {
+    margin-top: 10px;
+    margin-bottom: 35px;
+}
+
+.page-header h1 {
+    color: #ffffff !important;
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.page-header p {
+    color: rgba(255,255,255,0.8) !important;
+    font-size: 1.1rem;
+}
+
+.stat-card h6 {
+    color: rgba(255,255,255,0.8) !important;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.chart-card {
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 0 40px rgba(168,85,247,0.15);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+}
+
+.chart-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(168, 85, 247, 0.2);
+    border-color: var(--accent);
+}
+
+.chart-card h5 {
+    color: #ffffff !important;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.skill-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.skill-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.9);
+}
+
+.skill-list li:last-child {
+    border-bottom: none;
+}
+
+.badge-success {
+    background: #22c55e !important;
+    color: white !important;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+.badge-danger {
+    background: #ef4444 !important;
+    color: white !important;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+/* Chart container */
+.chart-container {
+    background: rgba(0,0,0,0.2);
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .reports-container {
+        padding: 20px 15px;
+    }
+    
+    .page-header h1 {
+        font-size: 2rem;
+    }
+}
+
+</style>
 </head>
 <body>
     <!-- Navbar -->
@@ -301,19 +667,13 @@
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="/dashboard">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/reports">Reports</a>
+                        <a class="nav-link" href="/home-login">Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/resources">Resources</a>
                     </li>
                     <li class="nav-item ms-lg-3">
                         <a href="/profile" class="btn btn-outline-primary btn-sm me-2">Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/logout" class="btn btn-outline-danger btn-sm">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -328,12 +688,12 @@
         </div>
         
         <!-- Stats Section -->
-        <div class="row g-3">
+        <div class="row g-4">
             <div class="col-md-3">
                 <div class="stat-card">
                     <h6>Total Tests Completed</h6>
                     <h3>{{ total_tests }}</h3>
-                    <i class="bi bi-clipboard-check float-end" style="color: var(--accent); font-size: 1.5rem;"></i>
+                    <i class="bi bi-clipboard-check float-end mt-3" style="color: var(--accent); font-size: 1.5rem;"></i>
                 </div>
             </div>
             
@@ -341,7 +701,7 @@
                 <div class="stat-card">
                     <h6>Average Score</h6>
                     <h3>{{ avg_score }}%</h3>
-                    <i class="bi bi-graph-up float-end" style="color: var(--accent); font-size: 1.5rem;"></i>
+                    <i class="bi bi-graph-up float-end mt-3" style="color: var(--accent); font-size: 1.5rem;"></i>
                 </div>
             </div>
             
@@ -355,7 +715,7 @@
                         <h5>N/A</h5>
                         <span class="badge-success">0%</span>
                     {% endif %}
-                    <i class="bi bi-trophy float-end" style="color: var(--accent); font-size: 1.5rem;"></i>
+                    <i class="bi bi-trophy float-end mt-3" style="color: var(--accent); font-size: 1.5rem;"></i>
                 </div>
             </div>
             
@@ -369,7 +729,7 @@
                         <h5>N/A</h5>
                         <span class="badge-danger">0%</span>
                     {% endif %}
-                    <i class="bi bi-lightbulb float-end" style="color: #ef4444; font-size: 1.5rem;"></i>
+                    <i class="bi bi-lightbulb float-end mt-3" style="color: #ef4444; font-size: 1.5rem;"></i>
                 </div>
             </div>
         </div>
@@ -419,33 +779,38 @@
             </div>
         </div>
         
-        <!-- Charts Section -->
-        <div class="row mt-4">
-            <div class="col-12">
-                <div class="chart-card">
-                    <h5><i class="bi bi-bar-chart me-2"></i>Field Performance Analysis</h5>
-                    <div style="position: relative; height: 300px;">
-                        <canvas id="fieldChart"></canvas>
+        <div class="row">
+            <div class="col-7">
+                <!-- Charts Section -->
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="chart-card">
+                            <h5><i class="bi bi-bar-chart me-2"></i>Field Performance Analysis</h5>
+                            <div class="chart-container">
+                                <canvas id="fieldChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-5">
+                <!-- Skill Chart -->
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="chart-card">
+                            <h5><i class="bi bi-lightning-charge me-2"></i>Detailed Skill Performance</h5>
+                            <div class="chart-container">
+                                <canvas id="skillChart"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <!-- Skill Chart -->
-        <div class="row mt-4">
-            <div class="col-12">
-                <div class="chart-card">
-                    <h5><i class="bi bi-lightning-charge me-2"></i>Detailed Skill Performance</h5>
-                    <div style="position: relative; height: 300px;">
-                        <canvas id="skillChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
         <!-- Action Button -->
-        <div class="text-center mt-4">
-            <a href="/dashboard" class="btn btn-primary" style="background: var(--primary); border: none;">
+        <div class="text-center mt-5">
+            <a href="/home-login" class="btn-primary-custom">
                 <i class="bi bi-arrow-left me-2"></i>Back to Dashboard
             </a>
         </div>
@@ -457,11 +822,11 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Graph colors based on theme
-            const primaryColor = '#4b5563';
-            const accentColor = '#10b981';
-            const gridColor = '#e5e7eb';
-            const textColor = '#6b7280';
+            // Graph colors for dark theme
+            const primaryColor = 'rgba(168,85,247,0.9)';
+            const accentColor = 'rgba(236,72,153,0.9)';
+            const gridColor = 'rgba(255,255,255,0.1)';
+            const textColor = 'rgba(255,255,255,0.8)';
             
             // Get data from template
             const fieldData = {{ field_scores|tojson|safe }};
@@ -476,12 +841,12 @@
                     datasets: [{
                         label: 'Score (%)',
                         data: Object.values(fieldData),
-                        backgroundColor: accentColor,
-                        borderColor: accentColor,
+                        backgroundColor: primaryColor,
+                        borderColor: 'rgba(255,255,255,0.3)',
                         borderWidth: 1,
                         borderRadius: 8,
-                        hoverBackgroundColor: '#059669',
-                        hoverBorderColor: '#059669'
+                        hoverBackgroundColor: accentColor,
+                        hoverBorderColor: accentColor
                     }]
                 },
                 options: {
@@ -492,7 +857,7 @@
                             display: false
                         },
                         tooltip: {
-                            backgroundColor: 'rgba(31, 41, 55, 0.9)',
+                            backgroundColor: 'rgba(15,12,41,0.9)',
                             titleColor: '#ffffff',
                             bodyColor: '#ffffff',
                             borderColor: primaryColor,
@@ -558,12 +923,12 @@
                     datasets: [{
                         label: 'Score (%)',
                         data: Object.values(skillData),
-                        backgroundColor: primaryColor,
-                        borderColor: primaryColor,
+                        backgroundColor: accentColor,
+                        borderColor: 'rgba(255,255,255,0.3)',
                         borderWidth: 1,
                         borderRadius: 8,
-                        hoverBackgroundColor: '#374151',
-                        hoverBorderColor: '#374151'
+                        hoverBackgroundColor: primaryColor,
+                        hoverBorderColor: primaryColor
                     }]
                 },
                 options: {
@@ -574,10 +939,10 @@
                             display: false
                         },
                         tooltip: {
-                            backgroundColor: 'rgba(31, 41, 55, 0.9)',
+                            backgroundColor: 'rgba(15,12,41,0.9)',
                             titleColor: '#ffffff',
                             bodyColor: '#ffffff',
-                            borderColor: primaryColor,
+                            borderColor: accentColor,
                             borderWidth: 1,
                             cornerRadius: 8,
                             callbacks: {
@@ -629,18 +994,6 @@
                         }
                     }
                 }
-            });
-            
-            // Add hover effect to cards
-            const cards = document.querySelectorAll('.stat-card, .chart-card, .ai-card');
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-5px)';
-                });
-                
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                });
             });
         });
     </script>

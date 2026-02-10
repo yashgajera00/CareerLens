@@ -14,22 +14,17 @@
     
     <style>
         :root {
-            --primary: #4b5563;
-            --primary-light: #6b7280;
-            --primary-dark: #374151;
-            --secondary: #6b7280;
-            --accent: #10b981;
-            --accent-light: #34d399;
-            --accent-dark: #059669;
-            --dark: #1f2937;
-            --light: #ffffff;
-            --gray-light: #f9fafb;
-            --gray-medium: #e5e7eb;
-            --text-dark: #111827;
-            --text-light: #6b7280;
-            --gradient-primary: linear-gradient(135deg, #4b5563 0%, #374151 100%);
-            --gradient-accent: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            --gradient-subtle: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+            --primary: rgba(168,85,247,0.9);
+            --primary-light: rgba(196,181,253,0.8);
+            --primary-dark: rgba(109,40,217,1);
+            --accent: rgba(236,72,153,0.9);
+            --dark: #0f0c29;
+            --light: rgba(255,255,255,0.08);
+            --text-dark: #ffffff;
+            --text-light: #c7d2fe;
+            --gradient-primary: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
+            --gradient-accent: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+            --gradient-subtle: linear-gradient(135deg, #0f0c29 0%, #24243e 100%);
         }
         
         * {
@@ -37,8 +32,9 @@
         }
         
         body {
-            background-color: var(--light);
-            color: var(--text-dark);
+            background: linear-gradient(135deg, #0b0b0f 0%, #12121a 50%, #0a0a12 100%);
+            background-attachment: fixed;
+            color: #ffffff;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
             overflow-x: hidden;
         }
@@ -49,7 +45,7 @@
         }
         
         ::-webkit-scrollbar-track {
-            background: #f1f1f1;
+            background: #1a1a2e;
             border-radius: 10px;
         }
         
@@ -62,12 +58,12 @@
             background: var(--primary-dark);
         }
         
-        /* Navbar styles */
+        /* Navbar styles - Keeping original height (20px 0) */
         .navbar {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            padding: 20px 0;
-            border-bottom: 1px solid var(--gray-medium);
+            background: rgba(255,255,255,0.2) !important;
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255,255,255,0.25);
+            padding: 20px 0; /* Original height maintained */
             position: fixed;
             top: 0;
             width: 100%;
@@ -87,13 +83,13 @@
         }
         
         .navbar-brand-logo {
-            width: 50px;
-            height: 50px;
+            width: 50px; /* Original size */
+            height: 50px; /* Original size */
             border-radius: 12px;
             margin-right: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            animation: logoFloat 3s ease-in-out infinite;
-            border: 1px solid var(--gray-medium);
+            animation: logoFloat 3s ease-in-out infinite; /* Logo movement preserved */
+            border: 1px solid rgba(255,255,255,0.2);
         }
         
         @keyframes logoFloat {
@@ -102,14 +98,14 @@
         }
         
         .navbar-brand strong {
-            color: var(--dark);
+            color: #ffffff !important; /* White text for dark background */
             font-weight: 800;
             font-size: 1.8rem;
             letter-spacing: -0.5px;
         }
         
         .nav-link {
-            color: var(--text-dark) !important;
+            color: #ffffff !important; /* White text for dark background */
             font-weight: 500;
             margin: 0 10px;
             position: relative;
@@ -134,7 +130,7 @@
         }
         
         .nav-link:hover {
-            color: var(--primary) !important;
+            color: var(--primary-light) !important;
         }
         
         .btn-primary-custom {
@@ -149,28 +145,12 @@
             z-index: 1;
         }
         
-        .btn-primary-custom::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: var(--gradient-accent);
-            transition: left 0.5s ease;
-            z-index: -1;
-        }
-        
-        .btn-primary-custom:hover::before {
-            left: 0;
-        }
-        
         .btn-primary-custom:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(75, 85, 99, 0.15);
+            box-shadow: 0 10px 25px rgba(168, 85, 247, 0.3);
         }
         
-        /* Hero Section */
+        /* Hero Section - Updated for dark theme */
         .hero-section {
             padding: 180px 0 100px;
             background: var(--gradient-subtle);
@@ -185,7 +165,7 @@
             right: 0;
             width: 40%;
             height: 100%;
-            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%234b5563' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23a855f7' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
             opacity: 0.5;
         }
         
@@ -194,7 +174,7 @@
             font-weight: 800;
             line-height: 1.1;
             margin-bottom: 25px;
-            color: var(--dark);
+            color: #ffffff;
             animation: fadeInUp 0.8s ease-out 0.2s both;
         }
         
@@ -211,7 +191,7 @@
         
         .hero-subtitle {
             font-size: 1.2rem;
-            color: var(--text-light);
+            color: rgba(255,255,255,0.8);
             margin-bottom: 35px;
             line-height: 1.6;
             animation: fadeInUp 0.8s ease-out 0.4s both;
@@ -229,11 +209,11 @@
         
         .hero-image {
             border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-            border: 1px solid var(--gray-medium);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255,255,255,0.1);
             transform: perspective(1000px) rotateY(-5deg);
             animation: imageAppear 1s ease-out 0.6s both;
-            filter: grayscale(20%);
+            filter: brightness(0.9);
         }
         
         @keyframes imageAppear {
@@ -277,7 +257,7 @@
             font-weight: 800;
             text-align: center;
             margin-bottom: 20px;
-            color: var(--dark);
+            color: #ffffff;
             position: relative;
             display: inline-block;
         }
@@ -295,7 +275,7 @@
         }
         
         .section-subtitle {
-            color: var(--text-light);
+            color: rgba(255,255,255,0.8);
             text-align: center;
             font-size: 1.1rem;
             margin-bottom: 60px;
@@ -305,39 +285,23 @@
         }
         
         .feature-card {
-            background: white;
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.12);
             border-radius: 12px;
-            border: 1px solid var(--gray-medium);
             padding: 30px;
             height: 100%;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 0 40px rgba(168,85,247,0.15);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
             position: relative;
             overflow: hidden;
             z-index: 1;
         }
         
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--gray-light);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: -1;
-        }
-        
-        .feature-card:hover::before {
-            opacity: 1;
-        }
-        
         .feature-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-            border-color: var(--accent-light);
+            box-shadow: 0 15px 35px rgba(168, 85, 247, 0.2);
+            border-color: var(--accent);
         }
         
         .feature-card .card-img-top {
@@ -346,23 +310,23 @@
             height: 200px;
             margin-bottom: 25px;
             transition: transform 0.5s ease;
-            filter: grayscale(30%);
+            filter: brightness(0.8);
         }
         
         .feature-card:hover .card-img-top {
             transform: scale(1.03);
-            filter: grayscale(0%);
+            filter: brightness(1);
         }
         
         .feature-card h5 {
-            color: var(--dark);
+            color: #ffffff;
             font-weight: 700;
             margin-bottom: 15px;
             font-size: 1.3rem;
         }
         
         .feature-card p {
-            color: var(--text-light);
+            color: rgba(255,255,255,0.8);
             font-size: 1rem;
             line-height: 1.6;
         }
@@ -378,7 +342,7 @@
             font-size: 1.8rem;
             color: white;
             background: var(--gradient-primary);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
         
         .feature-icon.accent {
@@ -387,39 +351,35 @@
         
         /* Modal Styling */
         .modal-content {
-            background: white;
-            border: none;
+            background: #0f0c29;
+            border: 1px solid rgba(255,255,255,0.15);
             border-radius: 16px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
             overflow: hidden;
-            border: 1px solid var(--gray-medium);
         }
         
         .modal-header {
-            background: var(--gray-light);
-            border-bottom: 1px solid var(--gray-medium);
+            background: rgba(255,255,255,0.08);
+            border-bottom: 1px solid rgba(255,255,255,0.15);
             padding: 25px;
         }
         
         .head-title {
             font-size: 2rem;
             font-weight: 800;
-            color: var(--dark);
+            color: #ffffff;
             width: 100%;
             text-align: center;
             letter-spacing: -0.5px;
         }
         
-        .btn-close {
-            opacity: 0.5;
-        }
-        
         .modal-body {
             padding: 35px;
+            color: rgba(255,255,255,0.9);
         }
         
         .modal-body h5 {
-            color: var(--dark);
+            color: #ffffff;
             font-weight: 700;
             margin-top: 25px;
             font-size: 1.4rem;
@@ -439,31 +399,26 @@
             background: var(--primary);
         }
         
-        .modal-body h5:nth-child(3) i { background: var(--primary-light); }
-        .modal-body h5:nth-child(5) i { background: var(--primary); }
-        .modal-body h5:nth-child(7) i { background: var(--secondary); }
-        .modal-body h5:nth-child(9) i { background: var(--accent); }
-        
         .modal-body p {
-            color: var(--text-light);
+            color: rgba(255,255,255,0.8);
             line-height: 1.7;
             margin-bottom: 20px;
             font-size: 1.05rem;
         }
         
         .modal-body hr {
-            border-top: 1px solid var(--gray-medium);
+            border-top: 1px solid rgba(255,255,255,0.15);
             opacity: 0.7;
             margin: 25px 0;
         }
         
         .cta-text {
-            background: var(--gray-light);
+            background: rgba(255,255,255,0.08);
             border-left: 4px solid var(--accent);
             border-radius: 8px;
             padding: 25px;
             font-style: italic;
-            color: var(--text-dark);
+            color: #ffffff;
             font-size: 1.1rem;
             line-height: 1.7;
             margin-top: 30px;
@@ -494,7 +449,7 @@
         
         .btn-primary-lg:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(75, 85, 99, 0.15);
+            box-shadow: 0 10px 25px rgba(168, 85, 247, 0.3);
             color: white;
         }
         
@@ -505,8 +460,8 @@
             margin-top: 80px;
             position: relative;
             overflow: hidden;
-            border-top: 1px solid var(--gray-medium);
-            border-bottom: 1px solid var(--gray-medium);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
         
         .cta-section::before {
@@ -516,19 +471,19 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%234b5563' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23a855f7' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
             opacity: 0.5;
         }
         
         .cta-title {
             font-size: 2.3rem;
             font-weight: 800;
-            color: var(--dark);
+            color: #ffffff;
             margin-bottom: 20px;
         }
         
         .cta-subtitle {
-            color: var(--text-light);
+            color: rgba(255,255,255,0.8);
             font-size: 1.1rem;
             margin-bottom: 30px;
             max-width: 600px;
@@ -542,21 +497,21 @@
             border-radius: 8px;
             padding: 14px 40px;
             font-weight: 700;
-            color: var(--primary);
+            color: #ffffff;
             font-size: 1.1rem;
             transition: all 0.3s ease;
         }
         
         .btn-outline-custom:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(75, 85, 99, 0.1);
+            box-shadow: 0 10px 25px rgba(168, 85, 247, 0.2);
             background: var(--primary);
             color: white;
         }
         
         /* Footer */
         .footer {
-            background: var(--dark);
+            background: #0f0c29;
             color: rgba(255, 255, 255, 0.8);
             padding: 35px 0;
             text-align: center;
@@ -625,7 +580,7 @@
     </style>
 </head>
 <body>
-    <!-- Navbar -->
+    <!-- Navbar - Updated to match reports.html style -->
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <!-- Brand logo and name -->
@@ -640,7 +595,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <!-- Navbar links and buttons -->
+            <!-- Navbar links and buttons - Keeping original home.html links -->
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
                     <li class="nav-item">
@@ -648,9 +603,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contact</a>
@@ -666,6 +618,7 @@
         </div>
     </nav>
 
+    <!-- Rest of the home.html content remains exactly the same -->
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
@@ -739,7 +692,7 @@
                             <i class="bi bi-clipboard-data"></i>
                         </div>
                         <h5 class="fw-bold">Skill-Based Evaluation</h5>
-                        <p class="text-muted">
+                        <p class="text-light">
                             Assess your technical, analytical and personal skills through structured, industry-relevant evaluation.
                         </p>
                     </div>
@@ -753,7 +706,7 @@
                             <i class="bi bi-briefcase"></i>
                         </div>
                         <h5 class="fw-bold">Career Matching</h5>
-                        <p class="text-muted">
+                        <p class="text-light">
                             Matches your skills and interests with suitable career options using advanced algorithms.
                         </p>
                     </div>
@@ -767,7 +720,7 @@
                             <i class="bi bi-bar-chart"></i>
                         </div>
                         <h5 class="fw-bold">Gap Analysis</h5>
-                        <p class="text-muted">
+                        <p class="text-light">
                             Identifies gaps between your current skills and industry requirements with precision.
                         </p>
                     </div>
@@ -781,7 +734,7 @@
                             <i class="bi bi-map"></i>
                         </div>
                         <h5 class="fw-bold">Improvement Plan</h5>
-                        <p class="text-muted">
+                        <p class="text-light">
                             Provides a personalized roadmap with resources to improve skills and career readiness.
                         </p>
                     </div>
@@ -796,7 +749,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="head-title">HOW IT WORKS</div>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
 
                 <div class="modal-body">
@@ -863,7 +816,7 @@
     <footer class="footer">
         <div class="container">
             <p class="mb-0">CareerLens | Smart Career Guidance System</p>
-            <p class="mb-0 mt-2"><small>© 2023 CareerLens. All rights reserved.</small></p>
+            <p class="mb-0 mt-2"><small>© 2026 CareerLens. All rights reserved.</small></p>
         </div>
     </footer>
 
@@ -907,7 +860,7 @@
                 const navbar = document.querySelector('.navbar');
                 if (window.scrollY > 50) {
                     navbar.style.padding = '15px 0';
-                    navbar.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.05)';
+                    navbar.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
                 } else {
                     navbar.style.padding = '20px 0';
                     navbar.style.boxShadow = 'none';
@@ -967,7 +920,7 @@
             .ripple-effect {
                 position: absolute;
                 border-radius: 50%;
-                background: rgba(16, 185, 129, 0.3);
+                background: rgba(236, 72, 153, 0.3);
                 transform: scale(0);
                 animation: ripple 0.6s linear;
                 pointer-events: none;
@@ -986,55 +939,12 @@
                 position: relative;
                 overflow: hidden;
             }
+            
+            .btn-close-white {
+                filter: invert(1) grayscale(100%) brightness(200%);
+            }
         `;
         document.head.appendChild(style);
     </script>
 </body>
-</html>
-
-<!--
-Key Features:
-Minimal Monochrome Color Scheme (Option 11):
-
-Primary: #4b5563 (Gray)
-
-Secondary: #6b7280 (Light Gray)
-
-Accent: #10b981 (Emerald Green)
-
-Background: #ffffff (White)
-
-Dark: #1f2937 (Charcoal)
-
-All Animations Preserved:
-
-Logo floating animation
-
-Hero image 3D effect
-
-Scroll-triggered animations
-
-Card hover effects
-
-Button ripple effects
-
-Modal scale animation
-
-Navbar scroll effect
-
-Clean CareerLens Homepage Only:
-
-No syllabus JavaScript exercises
-
-Only original CareerLens content
-
-Working "How It Works" modal
-
-All Flask template tags intact
-
-Fully responsive design
-
-This is just the CareerLens homepage with the minimal monochrome color scheme and all animations - no extra syllabus content!
-
-
--->
+</html>  

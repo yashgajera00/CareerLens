@@ -11,22 +11,17 @@
     
     <style>
         :root {
-            --primary: #4b5563;
-            --primary-light: #6b7280;
-            --primary-dark: #374151;
-            --secondary: #6b7280;
-            --accent: #10b981;
-            --accent-light: #34d399;
-            --accent-dark: #059669;
-            --dark: #1f2937;
-            --light: #ffffff;
-            --gray-light: #f9fafb;
-            --gray-medium: #e5e7eb;
-            --text-dark: #111827;
-            --text-light: #6b7280;
-            --gradient-primary: linear-gradient(135deg, #4b5563 0%, #374151 100%);
-            --gradient-accent: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            --gradient-subtle: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+            --primary: rgba(168,85,247,0.9);
+            --primary-light: rgba(196,181,253,0.8);
+            --primary-dark: rgba(109,40,217,1);
+            --accent: rgba(236,72,153,0.9);
+            --dark: #0f0c29;
+            --light: rgba(255,255,255,0.08);
+            --text-dark: #ffffff;
+            --text-light: #c7d2fe;
+            --gradient-primary: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
+            --gradient-accent: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+            --gradient-subtle: linear-gradient(135deg, #0f0c29 0%, #24243e 100%);
         }
         
         * {
@@ -34,8 +29,9 @@
         }
         
         body {
-            background-color: var(--light);
-            color: var(--text-dark);
+            background: linear-gradient(135deg, #0b0b0f 0%, #12121a 50%, #0a0a12 100%);
+            background-attachment: fixed;
+            color: #ffffff;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
             overflow-x: hidden;
             padding-top: 80px;
@@ -47,7 +43,7 @@
         }
         
         ::-webkit-scrollbar-track {
-            background: #f1f1f1;
+            background: #1a1a2e;
             border-radius: 10px;
         }
         
@@ -62,10 +58,10 @@
         
         /* Navbar styles */
         .navbar {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.2) !important;
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255,255,255,0.25);
             padding: 20px 0;
-            border-bottom: 1px solid var(--gray-medium);
             position: fixed;
             top: 0;
             width: 100%;
@@ -91,7 +87,7 @@
             margin-right: 12px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             animation: logoFloat 3s ease-in-out infinite;
-            border: 1px solid var(--gray-medium);
+            border: 1px solid rgba(255,255,255,0.2);
         }
         
         @keyframes logoFloat {
@@ -100,43 +96,39 @@
         }
         
         .navbar-brand strong {
-            color: var(--dark);
+            color: #ffffff !important;
             font-weight: 800;
             font-size: 1.8rem;
             letter-spacing: -0.5px;
         }
         
-        .btn-primary-custom {
-            background: var(--gradient-primary);
-            border: none;
-            border-radius: 8px;
-            padding: 10px 25px;
-            font-weight: 600;
-            color: white;
+        .nav-link {
+            color: #ffffff !important;
+            font-weight: 500;
+            margin: 0 10px;
             position: relative;
-            overflow: hidden;
-            z-index: 1;
+            padding: 8px 0 !important;
         }
         
-        .btn-primary-custom::before {
+        .nav-link::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: var(--gradient-accent);
-            transition: left 0.5s ease;
-            z-index: -1;
-        }
-        
-        .btn-primary-custom:hover::before {
+            bottom: 0;
             left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
+            transition: width 0.3s ease;
         }
         
-        .btn-primary-custom:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(75, 85, 99, 0.15);
+        .nav-link:hover::before,
+        .nav-link.active::before {
+            width: 100%;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-light) !important;
         }
         
         /* Dashboard Container */
@@ -146,14 +138,15 @@
             padding: 30px;
         }
         
-        /* Welcome Card */
+        /* Welcome Card - Hero Style */
         .welcome-card {
-            background: white;
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.12);
             border-radius: 16px;
-            padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            border: 1px solid var(--gray-medium);
+            padding: 50px;
+            margin-bottom: 40px;
+            box-shadow: 0 0 40px rgba(168,85,247,0.15);
             animation: fadeInUp 0.8s ease-out 0.2s both;
             position: relative;
             overflow: hidden;
@@ -163,37 +156,52 @@
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
-            width: 100%;
+            right: 0;
+            width: 40%;
             height: 100%;
-            background: var(--gradient-subtle);
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23a855f7' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
             opacity: 0.5;
-            z-index: -1;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .welcome-card h1 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 800;
-            margin-bottom: 10px;
-            color: var(--dark);
+            line-height: 1.1;
+            margin-bottom: 15px;
+            color: #ffffff;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
         }
         
         .welcome-card p {
-            color: var(--text-light);
-            font-size: 1.1rem;
+            color: rgba(255,255,255,0.8);
+            font-size: 1.2rem;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
         }
         
-        /* Stat Cards */
+        /* Stat Cards - Feature Card Style */
         .stat-card {
-            background: white;
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.12);
             border-radius: 12px;
-            padding: 25px;
+            padding: 30px;
             margin-bottom: 25px;
-            border: 1px solid var(--gray-medium);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 0 40px rgba(168,85,247,0.15);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
             position: relative;
             overflow: hidden;
+            z-index: 1;
             animation: fadeInUp 0.8s ease-out both;
         }
         
@@ -209,29 +217,30 @@
         
         .stat-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-            border-color: var(--accent-light);
+            box-shadow: 0 15px 35px rgba(168, 85, 247, 0.2);
+            border-color: var(--accent);
         }
         
         .stat-card h3 {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             font-weight: 800;
-            color: var(--dark);
+            color: #ffffff;
             margin-bottom: 8px;
         }
         
         .stat-card p {
-            color: var(--text-light);
+            color: rgba(255,255,255,0.8);
             font-size: 0.95rem;
             margin-bottom: 0;
         }
         
         /* Main Cards */
         .dashboard-card {
-            background: white;
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.12);
             border-radius: 12px;
-            border: 1px solid var(--gray-medium);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 0 40px rgba(168,85,247,0.15);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
             height: 100%;
             position: relative;
@@ -240,18 +249,18 @@
         
         .dashboard-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-            border-color: var(--accent-light);
+            box-shadow: 0 15px 35px rgba(168, 85, 247, 0.2);
+            border-color: var(--accent);
         }
         
         .card-header {
-            background: var(--gray-light);
-            border-bottom: 1px solid var(--gray-medium);
+            background: rgba(255,255,255,0.08);
+            border-bottom: 1px solid rgba(255,255,255,0.15);
             padding: 25px;
         }
         
         .card-header h5 {
-            color: var(--dark);
+            color: #ffffff;
             font-weight: 700;
             font-size: 1.3rem;
             margin: 0;
@@ -261,46 +270,84 @@
             padding: 25px;
         }
         
-        /* Assessment Buttons */
+        /* Buttons */
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 8px;
+            padding: 12px 28px;
+            font-weight: 600;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(168, 85, 247, 0.3);
+            color: white;
+        }
+        
         .btn-assessment {
             background: transparent;
             border: 2px solid var(--primary);
             border-radius: 8px;
-            padding: 12px 20px;
+            padding: 14px 30px;
             font-weight: 600;
             color: var(--primary);
             transition: all 0.3s ease;
+            width: 100%;
         }
         
         .btn-assessment:hover {
             background: var(--primary);
             color: white;
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(75, 85, 99, 0.1);
+            box-shadow: 0 10px 25px rgba(168, 85, 247, 0.3);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 10px 25px;
+            border-radius: 8px;
+        }
+        
+        .btn-warning:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
         }
         
         /* List Group */
         .list-group-item {
-            border: 1px solid var(--gray-medium);
+            background: rgba(255,255,255,0.08) !important;
+            border: 1px solid rgba(255,255,255,0.15);
             padding: 15px 20px;
-            color: var(--text-dark);
+            color: rgba(255,255,255,0.9);
             transition: all 0.3s ease;
         }
         
         .list-group-item:hover {
-            background: var(--gray-light);
-            border-color: var(--accent-light);
+            background: rgba(255,255,255,0.12) !important;
+            border-color: var(--accent);
             transform: translateX(5px);
         }
         
         /* Table Styling */
         .table {
-            margin-bottom: 0;
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(6px);
+            border-radius: 10px;
+            overflow: hidden;
         }
         
         .table thead th {
-            border-bottom: 2px solid var(--gray-medium);
-            color: var(--dark);
+            background: rgba(255,255,255,0.08);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            color: #ffffff;
             font-weight: 700;
             padding: 15px;
         }
@@ -310,31 +357,35 @@
         }
         
         .table tbody tr:hover {
-            background: var(--gray-light);
+            background: rgba(255,255,255,0.08);
         }
         
         .table tbody td {
             padding: 15px;
-            border-color: var(--gray-medium);
-            color: var(--text-dark);
+            border-color: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.9);
         }
         
-        /* Quick Links */
+        /* Quick Links - Feature Card Style */
         .quick-link-card {
-            background: white;
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.12);
             border-radius: 12px;
-            border: 1px solid var(--gray-medium);
             padding: 40px 20px;
             text-align: center;
             height: 100%;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 0 40px rgba(168,85,247,0.15);
+            text-decoration: none;
+            display: block;
         }
         
         .quick-link-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-            border-color: var(--accent-light);
+            box-shadow: 0 15px 35px rgba(168, 85, 247, 0.2);
+            border-color: var(--accent);
+            text-decoration: none;
         }
         
         .quick-link-card i {
@@ -344,28 +395,96 @@
         }
         
         .quick-link-card h5 {
-            color: var(--dark);
+            color: #ffffff;
             font-weight: 700;
             margin-bottom: 10px;
         }
         
         .quick-link-card p {
-            color: var(--text-light);
+            color: rgba(255,255,255,0.8);
             font-size: 0.95rem;
         }
         
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* Assessment List Items */
+        .assessment-photo-row {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 12px;
+            backdrop-filter: blur(6px);
+            color: #ffffff;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
         }
         
+        .assessment-photo-row:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(168,85,247,0.15);
+        }
+        
+        .assessment-date {
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .assessment-view-btn {
+            border: 2px solid rgba(255,255,255,0.4);
+            color: #ffffff;
+            border-radius: 8px;
+            padding: 5px 15px;
+            font-size: 0.9rem;
+        }
+        
+        .assessment-view-btn:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: var(--primary);
+        }
+        
+        .badge {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%) !important;
+            color: white !important;
+            border: none;
+        }
+        
+        /* Modal Styling */
+        .modal-content {
+            background: #0f0c29;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 16px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .modal-header {
+            background: rgba(255,255,255,0.08);
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            padding: 25px;
+        }
+        
+        .modal-title {
+            color: #ffffff;
+            font-weight: 700;
+        }
+        
+        .modal-body {
+            padding: 30px;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .modal-footer {
+            border-top: 1px solid rgba(255,255,255,0.15);
+        }
+        
+        .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+        
+        /* Result Modal */
+        .modal-header.bg-success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+        }
+        
+        /* Animation classes */
         .animate-on-scroll {
             opacity: 0;
             transform: translateY(30px);
@@ -377,7 +496,7 @@
             transform: translateY(0);
         }
         
-        /* Responsive */
+        /* Responsive adjustments */
         @media (max-width: 768px) {
             .dashboard-container {
                 padding: 20px 15px;
@@ -388,17 +507,70 @@
             }
             
             .welcome-card h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
             
             .stat-card h3 {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
+            
+            .navbar-brand strong {
+                font-size: 1.5rem;
+            }
+        }
+        
+        /* Outlined buttons */
+        .btn-outline-primary {
+            border: 2px solid rgba(255,255,255,0.4);
+            color: #ffffff;
+            background: transparent;
+        }
+        
+        .btn-outline-primary:hover {
+            background: rgba(168,85,247,0.2);
+            border-color: var(--primary);
+        }
+        
+        .btn-outline-danger {
+            border: 2px solid rgba(239,68,68,0.4);
+            color: #ffffff;
+            background: transparent;
+        }
+        
+        .btn-outline-danger:hover {
+            background: rgba(239,68,68,0.2);
+            border-color: #ef4444;
+        }
+        
+        /* Career Field Modal Specific */
+        .field-check {
+            accent-color: var(--primary);
+        }
+        
+        .field-check:checked {
+            background-color: var(--primary);
+        }
+        
+        label {
+            color: rgba(255,255,255,0.9);
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        label:hover {
+            background: rgba(255,255,255,0.08);
+        }
+
+        /* Career field list scroll */
+        .career-scroll {
+            max-height: 550px;
+            overflow-y: auto;
         }
     </style>
 </head>
 <body>
-<!-- Navbar -->
+    <!-- Navbar - Updated to match home.html style -->
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="/home-login">
@@ -414,7 +586,7 @@
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
                     <li class="nav-item">
-                        <a class="nav-link active" disable>Dashboard</a>
+                        <a class="nav-link active" href="#">Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/reports">Reports</a>
@@ -434,10 +606,10 @@
     </nav>
 
     <div class="dashboard-container">
-        <!-- Welcome Section -->
+        <!-- Welcome Section - Hero Style -->
         <div class="welcome-card animate-on-scroll">
             <h1>Welcome back, {{ user.name }}!</h1>
-            <p class="text-muted">Here's your career development overview and personalized insights</p>
+            <p>Here's your career development overview and personalized insights</p>
         </div>
         
         <!-- Stats Section -->
@@ -445,29 +617,29 @@
             <div class="col-md-3 animate-on-scroll" data-delay="0.1">
                 <div class="stat-card">
                     <h3>{{ total_assessments }}</h3>
-                    <p class="text-muted mb-0">Assessments Completed</p>
-                    <i class="bi bi-clipboard-check float-end mt-3" style="color: var(--accent); font-size: 1.5rem;"></i>
+                    <p class="text-light mb-0">Assessments Completed</p>
+                    <i class="bi bi-clipboard-check float-end mt-3" style="color: var(--accent); font-size: 1.8rem;"></i>
                 </div>
             </div>
             <div class="col-md-3 animate-on-scroll" data-delay="0.2">
                 <div class="stat-card">
                     <h3>{{ avg_score }}%</h3>
-                    <p class="text-muted mb-0">Average Score</p>
-                    <i class="bi bi-graph-up float-end mt-3" style="color: var(--accent); font-size: 1.5rem;"></i>
+                    <p class="text-light mb-0">Average Score</p>
+                    <i class="bi bi-graph-up float-end mt-3" style="color: var(--accent); font-size: 1.8rem;"></i>
                 </div>
             </div>
             <div class="col-md-3 animate-on-scroll" data-delay="0.3">
                 <div class="stat-card">
                     <h3>{{ career_fields|length }}</h3>
-                    <p class="text-muted mb-0">Career Fields Matched</p>
-                    <i class="bi bi-briefcase float-end mt-3" style="color: var(--accent); font-size: 1.5rem;"></i>
+                    <p class="text-light mb-0">Career Fields Matched</p>
+                    <i class="bi bi-briefcase float-end mt-3" style="color: var(--accent); font-size: 1.8rem;"></i>
                 </div>
             </div>
             <div class="col-md-3 animate-on-scroll" data-delay="0.4">
                 <div class="stat-card">
                     <h3>{{ user.created_at.strftime('%b %Y') }}</h3>
-                    <p class="text-muted mb-0">Member Since</p>
-                    <i class="bi bi-calendar-heart float-end mt-3" style="color: var(--accent); font-size: 1.5rem;"></i>
+                    <p class="text-light mb-0">Member Since</p>
+                    <i class="bi bi-calendar-heart float-end mt-3" style="color: var(--accent); font-size: 1.8rem;"></i>
                 </div>
             </div>
         </div>
@@ -480,18 +652,12 @@
                         <h5><i class="bi bi-clipboard-data me-2"></i>Take Assessments</h5>
                     </div>
                     <div class="card-body">
-                        <p>Complete assessments to get personalized career recommendations and insights.</p>
+                        <p class="mb-4">Complete assessments to get personalized career recommendations and insights.</p>
                         <div class="row g-3">
-                            <div class="col-6">
+                            <div class="col-12">
                                 <button onclick="checkUnlock('/assessment/career/start')" 
-                                        class="btn btn-assessment w-100 py-3">
-                                    Career Test
-                                </button>
-                            </div>
-                            <div class="col-6">
-                                <button onclick="checkUnlock('/assessment/aptitude')" 
-                                        class="btn btn-assessment w-100 py-3">
-                                    Aptitude
+                                        class="btn-assessment">
+                                    <i class="bi bi-clipboard-check me-2"></i>Career Test
                                 </button>
                             </div>
                         </div>
@@ -510,6 +676,7 @@
                             <div class="list-group mb-3">
                                 {% for field in career_fields %}
                                 <div class="list-group-item">
+                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
                                     <span>{{ field.career_field }}</span>
                                 </div>
                                 {% endfor %}
@@ -518,19 +685,19 @@
                             <!-- Change button -->
                             <div class="text-center">
                                 <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#careerFieldModal">
-                                    Change Career Fields
+                                    <i class="bi bi-pencil-square me-2"></i>Change Career Fields
                                 </button>
                             </div>
 
                         {% else %}
                             <!-- First time select -->
-                            <p class="text-muted text-center">
+                            <p class="text-muted text-center mb-4">
                                 You have not selected any career field yet.
                             </p>
 
                             <div class="text-center">
                                 <button class="btn btn-primary-custom" data-bs-toggle="modal" data-bs-target="#careerFieldModal">
-                                    Select Career Fields
+                                    <i class="bi bi-plus-circle me-2"></i>Select Career Fields
                                 </button>
                             </div>
                         {% endif %}
@@ -546,119 +713,106 @@
             </div>
             <div class="card-body">
                 {% if assessments %}
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Test Type</th>
-                                <th>Date & Time</th>
-                                <th>Score</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {% for assessment in assessments %}
-                        <tr>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    {% if assessment.assessment_type == 'career' %}
-                                    <i class="bi bi-briefcase me-2"></i> Career Test
-                                    {% elif assessment.assessment_type == 'aptitude' %}
-                                    <i class="bi bi-lightbulb me-2"></i> Aptitude Test
-                                    {% endif %}
-                                </div>
-                            </td>
-
-                            <td>{{ assessment.completed_at.strftime('%Y-%m-%d %H:%M') }}</td>
-
-                            <td>
-                                <span class="badge bg-success">
-                                    {{ assessment.score }}%
-                                </span>
-
-                                {% if loop.first and assessment.assessment_type == 'career' %}
-                                <a href="/assessment/career/review"
-                                class="btn btn-sm btn-outline-primary ms-2">
-                                    <i class="bi bi-eye"></i> Review
-                                </a>
+                <div class="assessment-list">
+                    {% for assessment in assessments %}
+                    <div class="assessment-photo-row d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <div class="fw-semibold">
+                                {% if assessment.assessment_type == 'career' %}
+                                    <i class="bi bi-clipboard-data me-2"></i>Career Test
                                 {% endif %}
+                            </div>
+                            <div class="small assessment-date">
+                                {{ assessment.completed_at.strftime('%Y-%m-%d %H:%M') }}
+                            </div>
+                        </div>
 
-                            </td>
-                        </tr>
-                        {% endfor %}
-                        </tbody>
+                        <div class="d-flex align-items-center">
+                            <span class="badge bg-success me-3 px-3 py-2">
+                                {{ assessment.score }}%
+                            </span>
 
-                    </table>
+                            {% if loop.first %}
+                            <a href="/assessment/{{ assessment.assessment_type }}/review"
+                            class="btn btn-sm assessment-view-btn">
+                                <i class="bi bi-eye me-1"></i>View
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
                 </div>
                 {% else %}
                 <div class="text-center py-4">
-                    <i class="bi bi-clipboard-x fs-1 text-muted mb-3"></i>
-                    <p class="text-muted">No assessments completed yet. Start your journey today!</p>
-                    <a href="/assessment/career" class="btn btn-primary-custom">Start Assessment</a>
+                    <i class="bi bi-clipboard-x fs-1 text-muted mb-3" style="color: rgba(255,255,255,0.5) !important;"></i>
+                    <p class="text-muted mb-4">No assessments completed yet. Start your journey today!</p>
+                    <button onclick="checkUnlock('/assessment/career/start')" class="btn btn-primary-custom">
+                        <i class="bi bi-rocket-takeoff me-2"></i>Start Assessment
+                    </button>
                 </div>
                 {% endif %}
             </div>
         </div>
-        
+
         <!-- Quick Links -->
         <div class="row mt-4">
             <div class="col-md-4 mb-4 animate-on-scroll" data-delay="0.4">
-                <a href="/reports" class="text-decoration-none">
-                    <div class="quick-link-card">
-                        <i class="bi bi-bar-chart"></i>
-                        <h5 class="mt-3">View Reports</h5>
-                        <p class="text-muted">Detailed career analysis and insights</p>
-                    </div>
+                <a href="/reports" class="quick-link-card">
+                    <i class="bi bi-bar-chart"></i>
+                    <h5 class="mt-3">View Reports</h5>
+                    <p class="text-light">Detailed career analysis and insights</p>
                 </a>
             </div>
             <div class="col-md-4 mb-4 animate-on-scroll" data-delay="0.5">
-                <a href="/resources" class="text-decoration-none">
-                    <div class="quick-link-card">
-                        <i class="bi bi-book"></i>
-                        <h5 class="mt-3">Learning Resources</h5>
-                        <p class="text-muted">Personalized learning materials</p>
-                    </div>
+                <a href="/resources" class="quick-link-card">
+                    <i class="bi bi-book"></i>
+                    <h5 class="mt-3">Learning Resources</h5>
+                    <p class="text-light">Personalized learning materials</p>
                 </a>
             </div>
             <div class="col-md-4 mb-4 animate-on-scroll" data-delay="0.6">
-                <a href="/profile" class="text-decoration-none">
-                    <div class="quick-link-card">
-                        <i class="bi bi-person"></i>
-                        <h5 class="mt-3">Update Profile</h5>
-                        <p class="text-muted">Edit your skills and interests</p>
-                    </div>
+                <a href="/profile" class="quick-link-card">
+                    <i class="bi bi-person"></i>
+                    <h5 class="mt-3">Update Profile</h5>
+                    <p class="text-light">Edit your skills and interests</p>
                 </a>
             </div>
         </div>
     </div>
 
+    <!-- Career Field Modal -->
     <div class="modal fade" id="careerFieldModal" tabindex="-1">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <form method="POST" action="/select-career-fields" onsubmit="return validateSelection()">
-                    
                     <div class="modal-header">
-                        <h5 class="modal-title">Select Career Fields (Min 1 – Max 5)</h5>
+                        <h5 class="modal-title"><i class="bi bi-briefcase me-2"></i>Select Career Fields (Min 1 – Max 5)</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
                     <div class="modal-body">
-                        <div class="row">
-                            {% for field in ALL_CAREERS %}
-                            <div class="col-md-6">
-                                <label class="d-flex align-items-center gap-2">
-                                    <input type="checkbox" class="field-check" name="career_fields" value="{{ field }}">
-                                    {{ field }}
-                                </label>
+                        <div class="career-scroll">
+                            <div class="row">
+                                {% for field in ALL_CAREERS %}
+                                <div class="col-md-6 mb-2">
+                                    <label class="d-flex align-items-center gap-2 p-2 rounded">
+                                        <input type="checkbox" class="field-check me-2" name="career_fields" value="{{ field }}">
+                                        <span>{{ field }}</span>
+                                    </label>
+                                </div>
+                                {% endfor %}
                             </div>
-                            {% endfor %}
                         </div>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Save Selection</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary-custom">
+                            <i class="bi bi-check-circle me-2"></i>Save Selection
+                        </button>
+                        <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">
+                            <i class="bi bi-x-circle me-2"></i>Close
+                        </button>
                     </div>
-
                 </form>
             </div>
         </div>
@@ -666,25 +820,26 @@
 
     <!-- Result Modal -->
     <div class="modal fade" id="resultModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-        <div class="modal-header bg-success text-white">
-            <h5 class="modal-title">🎉 Test Result</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title"><i class="bi bi-trophy me-2"></i>Test Result</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <h3 class="mb-3">{{ last_result.type }}</h3>
+                    <div class="display-4 text-success mb-3">
+                        <strong>{{ last_result.score }}%</strong>
+                    </div>
+                    <p class="text-light">This result is now added in your Recent Assessments.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary-custom" data-bs-dismiss="modal">
+                        <i class="bi bi-check-circle me-2"></i>OK
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="modal-body text-center">
-            <h3>{{ last_result.type }}</h3>
-            <p class="fs-4 mt-3">
-                Your Score:  
-                <strong class="text-success">{{ last_result.score }}%</strong>
-            </p>
-            <p class="text-muted">This result is now added in your Recent Assessments.</p>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
-        </div>
-        </div>
-    </div>
     </div>
 
     <!-- Bootstrap JS Bundle -->
@@ -738,13 +893,61 @@
                 const navbar = document.querySelector('.navbar');
                 if (window.scrollY > 50) {
                     navbar.style.padding = '15px 0';
-                    navbar.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.05)';
+                    navbar.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
                 } else {
                     navbar.style.padding = '20px 0';
                     navbar.style.boxShadow = 'none';
                 }
             });
+            
+            // Add ripple effect to buttons
+            const buttons = document.querySelectorAll('.btn-primary-custom, .btn-assessment, .btn-warning');
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const x = e.clientX - e.target.getBoundingClientRect().left;
+                    const y = e.clientY - e.target.getBoundingClientRect().top;
+                    
+                    const ripple = document.createElement('span');
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.classList.add('ripple-effect');
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
         });
+        
+        // Add ripple effect styles
+        const style = document.createElement('style');
+        style.textContent = `
+            .ripple-effect {
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(236, 72, 153, 0.3);
+                transform: scale(0);
+                animation: ripple 0.6s linear;
+                pointer-events: none;
+                width: 20px;
+                height: 20px;
+            }
+            
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+            
+            .btn-primary-custom, .btn-assessment, .btn-warning {
+                position: relative;
+                overflow: hidden;
+            }
+        `;
+        document.head.appendChild(style);
 
         function validateSelection() {
             const checked = document.querySelectorAll('.field-check:checked');
@@ -772,29 +975,29 @@
 
                     if (checked.length > 5) {
                         this.checked = false;
-                        alert("⚠ Maximum 5 career fields j select kari shako!");
+                        alert("⚠ Maximum 5 career fields can be selected!");
                     }
                 });
             });
         });
 
-    function checkUnlock(url) {
-        const isUnlocked = {{ is_unlocked|tojson }};
-        if (!isUnlocked) {
-            alert("Please select at least one career field first!");
-            var modal = new bootstrap.Modal(document.getElementById('careerFieldModal'));
-            modal.show();
-            return false;
+        function checkUnlock(url) {
+            const isUnlocked = {{ is_unlocked|tojson }};
+            if (!isUnlocked) {
+                alert("Please select at least one career field first!");
+                var modal = new bootstrap.Modal(document.getElementById('careerFieldModal'));
+                modal.show();
+                return false;
+            }
+            
+            // Use direct route for career test
+            if (url.includes('career')) {
+                window.location.href = '/assessment/career/start';
+            } else {
+                window.location.href = url;
+            }
+            return true;
         }
-        
-        // Use direct route for career test
-        if (url.includes('career')) {
-            window.location.href = '/assessment/career/start';
-        } else {
-            window.location.href = url;
-        }
-        return true;
-    }
     </script>
 </body>
 </html>

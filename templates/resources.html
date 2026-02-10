@@ -4,69 +4,487 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resources - CareerLens</title>
+    
+    <!-- Bootstrap CSS & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    
     <style>
         :root {
-            --primary: #4b5563;
-            --accent: #10b981;
+            --primary: rgba(168,85,247,0.9);
+            --primary-light: rgba(196,181,253,0.8);
+            --primary-dark: rgba(109,40,217,1);
+            --accent: rgba(236,72,153,0.9);
+            --accent-light: rgba(249,168,212,0.8);
+            --accent-dark: rgba(219,39,119,1);
+            --dark: #0f0c29;
+            --light: rgba(255,255,255,0.08);
+            --text-dark: #ffffff;
+            --text-light: rgba(255,255,255,0.7);
+            --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            --gradient-dark: linear-gradient(135deg, #0b0b0f 0%, #12121a 50%, #0a0a12 100%);
+        }
+        
+        * {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         body {
-            background: #f9fafb;
+            background: var(--gradient-dark);
+            background-attachment: fixed;
+            color: var(--text-dark);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            overflow-x: hidden;
+            padding-top: 60px;
         }
         
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+        
+        /* Navbar styles */
+        .navbar {
+            background: rgba(255,255,255,0.2) !important;
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(255,255,255,0.25);
+            padding: 10px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        .navbar-brand-logo {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            margin-right: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .navbar-brand strong {
+            color: #ffffff !important;
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -0.5px;
+        }
+        
+        /* Resources Container */
         .resources-container {
-            margin: 100px auto 50px;
+            margin: 0 auto 50px;
             max-width: 1200px;
-            padding: 20px;
+            padding: 30px;
         }
         
+        /* Page Header */
+        .page-header {
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 40px rgba(168,85,247,0.15);
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: #ffffff !important;
+        }
+        
+        .page-header p {
+            color: rgba(255,255,255,0.8) !important;
+            font-size: 1.1rem;
+        }
+        
+        /* Resource Cards */
         .resource-card {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 25px;
-            border: 1px solid #e5e7eb;
-            transition: all 0.3s;
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 40px rgba(168,85,247,0.15);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            height: 100%;
         }
         
         .resource-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.25);
+            border-color: var(--accent);
         }
         
-        .btn-primary-custom {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 8px;
+        .resource-card h3 {
+            color: #ffffff !important;
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .resource-card h3 i {
+            margin-right: 15px;
+            color: var(--accent);
+        }
+        
+        /* Alert Styling */
+        .alert-personalized {
+            background: linear-gradient(135deg, rgba(168,85,247,0.15) 0%, rgba(236,72,153,0.15) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-left: 4px solid var(--accent);
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin-bottom: 35px;
+        }
+        
+        .alert-personalized h5 {
+            color: #ffffff !important;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .alert-personalized h5 i {
+            color: var(--accent);
+            margin-right: 12px;
+        }
+        
+        .alert-personalized p {
+            color: rgba(255,255,255,0.9) !important;
+            margin-bottom: 0;
+        }
+        
+        /* Resource Box */
+        .resource-box {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 30px;
+            height: 100%;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+        }
+        
+        .resource-box:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: 0 15px 30px rgba(168,85,247,0.2);
+            background: rgba(255,255,255,0.12);
+        }
+        
+        .resource-box h5 {
+            color: #ffffff !important;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .resource-box h5 i {
+            color: var(--accent);
+            margin-right: 12px;
+        }
+        
+        .resource-box p {
+            color: rgba(255,255,255,0.7) !important;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+        
+        /* Skill List */
+        .skill-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .skill-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.9) !important;
+            font-size: 1rem;
+        }
+        
+        .skill-list li:last-child {
+            border-bottom: none;
+        }
+        
+        /* Badge Styles */
+        .badge-beginner {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+            color: white !important;
+            padding: 6px 15px;
+            border-radius: 20px;
             font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-block;
+        }
+        
+        .badge-intermediate {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%) !important;
+            color: white !important;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-block;
+        }
+        
+        .badge-advanced {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
+            color: white !important;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-block;
+        }
+        
+        /* Button Styles */
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            color: white !important;
+            border: none;
+            padding: 14px 35px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            box-shadow: 0 5px 20px rgba(168,85,247,0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(168,85,247,0.4);
+            color: white !important;
+        }
+        
+        .btn-outline-custom {
+            background: transparent;
+            color: #ffffff !important;
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 10px 25px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-custom:hover {
+            background: rgba(168,85,247,0.15);
+            color: #ffffff !important;
+            transform: translateY(-2px);
+            border-color: var(--accent);
+        }
+        
+        /* Skill badges inside boxes */
+        .badge-skill {
+            background: rgba(255,255,255,0.12) !important;
+            color: rgba(255,255,255,0.9) !important;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-right: 8px;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+        
+        /* Platform badges for courses */
+        .badge-platform {
+            background: rgba(255,255,255,0.1) !important;
+            color: rgba(255,255,255,0.8) !important;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        
+        /* Course card specific styles */
+        .course-card {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 25px;
+            height: 100%;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: 0 15px 30px rgba(168,85,247,0.2);
+            background: rgba(255,255,255,0.12);
+        }
+        
+        .course-card h5 {
+            color: #ffffff !important;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        
+        .course-card p {
+            color: rgba(255,255,255,0.7) !important;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .course-duration {
+            color: rgba(255,255,255,0.7) !important;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .course-duration i {
+            margin-right: 5px;
+            color: var(--accent);
+        }
+        
+        /* Navbar links */
+        .navbar-nav .nav-link {
+            color: rgba(255,255,255,0.9) !important;
+            font-weight: 500;
+        }
+        
+        .navbar-nav .nav-link:hover {
+            color: var(--primary-light) !important;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .resources-container {
+                padding: 20px 15px;
+            }
+            
+            .page-header {
+                padding: 30px 25px;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .resource-card {
+                padding: 30px 20px;
+            }
+            
+            .resource-box, .course-card {
+                padding: 25px;
+            }
+            
+            .course-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+        
+        /* Text color fixes */
+        body, p, span, li, label {
+            color: rgba(255,255,255,0.92) !important;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            color: #ffffff !important;
+        }
+        
+        .text-muted {
+            color: rgba(255,255,255,0.6) !important;
+        }
+        
+        /* Course button alignment */
+        .course-card .btn-outline-custom {
+            width: 100%;
+            margin-top: auto;
         }
     </style>
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="/home-login">
-                <img src="{{url_for('static',filename = 'logo.png')}}" class="me-2" style="width: 40px; height: 40px;">
+                <img src="{{url_for('static',filename = 'logo.png')}}" class="navbar-brand-logo">
                 <strong>CareerLens</strong>
             </a>
-            <div class="d-flex">
-                <a href="/home-login" class="btn btn-outline-secondary btn-sm me-2">Dashboard</a>
-                <a href="/logout" class="btn btn-outline-danger btn-sm">Logout</a>
+            
+            <!-- Toggler for mobile -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home-login">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/reports">Reports</a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <a href="/profile" class="btn btn-outline-primary btn-sm me-2">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/logout" class="btn btn-outline-danger btn-sm">Logout</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
 
     <div class="resources-container">
-        <h1 class="mb-4">Learning Resources</h1>
-        <p class="text-muted mb-5">Hello {{ user.name }}! Here are personalized resources based on your career interests.</p>
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1><i class="bi bi-book me-2"></i>Learning Resources</h1>
+            <p>Hello {{ user.name }}! Here are personalized resources based on your career interests.</p>
+        </div>
         
+        <!-- Personalized Alert -->
         {% if career_fields %}
-        <div class="alert alert-info">
+        <div class="alert-personalized">
             <h5><i class="bi bi-lightbulb me-2"></i>Recommended for you</h5>
             <p class="mb-0">Based on your assessments, we recommend focusing on: <strong>{{ career_fields|join(', ') }}</strong></p>
         </div>
@@ -76,30 +494,28 @@
         <div class="resource-card">
             <h3><i class="bi bi-briefcase me-2"></i>Career Path Guides</h3>
             <div class="row mt-4">
-                <div class="col-md-6">
-                    <div class="p-3 border rounded mb-3">
-                        <h5>Software Engineering</h5>
+                <div class="col-md-6 mb-4">
+                    <div class="resource-box">
+                        <h5><i class="bi bi-code-slash me-2"></i>Software Engineering</h5>
                         <p class="text-muted small">Complete roadmap from beginner to advanced</p>
-                        <ul class="small">
-                            <li>Programming Fundamentals</li>
-                            <li>Data Structures & Algorithms</li>
-                            <li>Web Development</li>
-                            <li>System Design</li>
+                        <ul class="skill-list">
+                            <li><i class="bi bi-check-circle text-success me-2"></i>Programming Fundamentals</li>
+                            <li><i class="bi bi-check-circle text-success me-2"></i>Data Structures & Algorithms</li>
+                            <li><i class="bi bi-check-circle text-success me-2"></i>Web Development</li>
+                            <li><i class="bi bi-check-circle text-success me-2"></i>System Design</li>
                         </ul>
-                        <button class="btn btn-sm btn-outline-primary">View Roadmap</button>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="p-3 border rounded mb-3">
-                        <h5>Data Science</h5>
+                <div class="col-md-6 mb-4">
+                    <div class="resource-box">
+                        <h5><i class="bi bi-graph-up me-2"></i>Data Science</h5>
                         <p class="text-muted small">Master data analysis and machine learning</p>
-                        <ul class="small">
-                            <li>Statistics & Probability</li>
-                            <li>Python for Data Science</li>
-                            <li>Machine Learning</li>
-                            <li>Data Visualization</li>
+                        <ul class="skill-list">
+                            <li><i class="bi bi-check-circle text-success me-2"></i>Statistics & Probability</li>
+                            <li><i class="bi bi-check-circle text-success me-2"></i>Python for Data Science</li>
+                            <li><i class="bi bi-check-circle text-success me-2"></i>Machine Learning</li>
+                            <li><i class="bi bi-check-circle text-success me-2"></i>Data Visualization</li>
                         </ul>
-                        <button class="btn btn-sm btn-outline-primary">View Roadmap</button>
                     </div>
                 </div>
             </div>
@@ -109,76 +525,173 @@
         <div class="resource-card">
             <h3><i class="bi bi-tools me-2"></i>Skill Development</h3>
             <div class="row mt-4">
-                <div class="col-md-4 mb-3">
-                    <div class="p-3 border rounded h-100">
-                        <h6><i class="bi bi-code-slash me-2"></i>Technical Skills</h6>
+                <div class="col-md-4 mb-4">
+                    <div class="resource-box">
+                        <h5><i class="bi bi-code-slash me-2"></i>Technical Skills</h5>
                         <p class="small text-muted">Programming, tools, and frameworks</p>
-                        <a href="#" class="small">View Resources →</a>
+                        <div class="mt-3">
+                            <span class="badge-skill">Python</span>
+                            <span class="badge-skill">JavaScript</span>
+                            <span class="badge-skill">SQL</span>
+                            <span class="badge-skill">Git</span>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <div class="p-3 border rounded h-100">
-                        <h6><i class="bi bi-chat-dots me-2"></i>Soft Skills</h6>
+                <div class="col-md-4 mb-4">
+                    <div class="resource-box">
+                        <h5><i class="bi bi-chat-dots me-2"></i>Soft Skills</h5>
                         <p class="small text-muted">Communication, teamwork, leadership</p>
-                        <a href="#" class="small">View Resources →</a>
+                        <div class="mt-3">
+                            <span class="badge-skill">Communication</span>
+                            <span class="badge-skill">Teamwork</span>
+                            <span class="badge-skill">Problem-solving</span>
+                            <span class="badge-skill">Leadership</span>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-3">
-                    <div class="p-3 border rounded h-100">
-                        <h6><i class="bi bi-graph-up me-2"></i>Business Skills</h6>
+                <div class="col-md-4 mb-4">
+                    <div class="resource-box">
+                        <h5><i class="bi bi-briefcase me-2"></i>Business Skills</h5>
                         <p class="small text-muted">Management, strategy, entrepreneurship</p>
-                        <a href="#" class="small">View Resources →</a>
+                        <div class="mt-3">
+                            <span class="badge-skill">Project Management</span>
+                            <span class="badge-skill">Strategy</span>
+                            <span class="badge-skill">Entrepreneurship</span>
+                            <span class="badge-skill">Negotiation</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         
-        <!-- Recommended Courses -->
+        <!-- Recommended Courses - CHANGED TO CARD LAYOUT -->
         <div class="resource-card">
-            <h3><i class="bi bi-book me-2"></i>Recommended Courses</h3>
-            <div class="table-responsive mt-4">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Course Name</th>
-                            <th>Platform</th>
-                            <th>Duration</th>
-                            <th>Level</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Introduction to Programming</td>
-                            <td>Coursera</td>
-                            <td>6 weeks</td>
-                            <td>Beginner</td>
-                        </tr>
-                        <tr>
-                            <td>Data Science Specialization</td>
-                            <td>edX</td>
-                            <td>4 months</td>
-                            <td>Intermediate</td>
-                        </tr>
-                        <tr>
-                            <td>Machine Learning A-Z</td>
-                            <td>Udemy</td>
-                            <td>2 months</td>
-                            <td>Advanced</td>
-                        </tr>
-                        <tr>
-                            <td>Business Communication</td>
-                            <td>LinkedIn Learning</td>
-                            <td>3 weeks</td>
-                            <td>Beginner</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <h3><i class="bi bi-bookmark-star me-2"></i>Recommended Courses</h3>
+            <div class="row mt-4">
+                <!-- Course 1 -->
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="course-card">
+                        <h5>Introduction to Programming</h5>
+                        <p class="small text-muted">Learn programming fundamentals with hands-on exercises</p>
+                        
+                        <div class="course-meta">
+                            <span class="badge-platform">Coursera</span>
+                            <span class="badge-beginner">Beginner</span>
+                        </div>
+                        
+                        <div class="course-duration mb-3">
+                            <i class="bi bi-clock"></i> 6 weeks
+                        </div>
+                        
+                        <a href="https://www.coursera.org/" target="_blank" class="btn btn-outline-custom mt-auto">Enroll Now</a>
+                    </div>
+                </div>
+                
+                <!-- Course 2 -->
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="course-card">
+                        <h5>Data Science Specialization</h5>
+                        <p class="small text-muted">Master data analysis, visualization, and machine learning</p>
+                        
+                        <div class="course-meta">
+                            <span class="badge-platform">edX</span>
+                            <span class="badge-intermediate">Intermediate</span>
+                        </div>
+                        
+                        <div class="course-duration mb-3">
+                            <i class="bi bi-clock"></i> 4 months
+                        </div>
+                        
+                        <a href="https://www.edx.org/" target="_blank" class="btn btn-outline-custom mt-auto">Enroll Now</a>
+                    </div>
+                </div>
+                
+                <!-- Course 3 -->
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="course-card">
+                        <h5>Machine Learning A-Z</h5>
+                        <p class="small text-muted">Comprehensive guide to machine learning algorithms</p>
+                        
+                        <div class="course-meta">
+                            <span class="badge-platform">Udemy</span>
+                            <span class="badge-advanced">Advanced</span>
+                        </div>
+                        
+                        <div class="course-duration mb-3">
+                            <i class="bi bi-clock"></i> 2 months
+                        </div>
+                        
+                        <a href="https://www.udemy.com/?srsltid=AfmBOoqD6Rj6wGKBrdCfQhlC4MstQ6vdSh8wAKSsQII47F4xVxn7nM4W" target="_blank" class="btn btn-outline-custom mt-auto">Enroll Now</a>
+                    </div>
+                </div>
+                
+                <!-- Course 4 -->
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="course-card">
+                        <h5>Business Communication</h5>
+                        <p class="small text-muted">Improve professional communication and presentation skills</p>
+                        
+                        <div class="course-meta">
+                            <span class="badge-platform">LinkedIn Learning</span>
+                            <span class="badge-beginner">Beginner</span>
+                        </div>
+                        
+                        <div class="course-duration mb-3">
+                            <i class="bi bi-clock"></i> 3 weeks
+                        </div>
+                        
+                        <a href="https://www.linkedin.com/learning-login/" target="_blank" class="btn btn-outline-custom mt-auto">Enroll Now</a>
+                    </div>
+                </div>
             </div>
         </div>
         
-        <div class="text-center mt-4">
-            <a href="/home-login" class="btn-primary-custom">Back to Dashboard</a>
+        <!-- Action Button -->
+        <div class="text-center mt-5">
+            <a href="/home-login" class="btn-primary-custom">
+                <i class="bi bi-arrow-left me-2"></i>Back to Dashboard
+            </a>
         </div>
     </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effect to cards
+            const cards = document.querySelectorAll('.resource-card, .resource-box, .course-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-8px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    if (!this.classList.contains('hover-effect')) {
+                        this.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+            
+            // Add click animation to buttons
+            const buttons = document.querySelectorAll('.btn-outline-custom, .btn-primary-custom');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                });
+            });
+            
+            // Add active state to current page in navbar
+            const currentPath = window.location.pathname;
+            document.querySelectorAll('.nav-link').forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

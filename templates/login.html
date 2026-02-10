@@ -6,24 +6,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-        /* All existing CSS styles remain the same */
+        /* Updated color scheme to match reports.html */
         :root {
-            --primary: #4b5563;
-            --secondary: #6b7280;
-            --accent: #10b981;
-            --background: #ffffff;
-            --dark: #1f2937;
+            --primary: rgba(168,85,247,0.9);
+            --primary-light: rgba(196,181,253,0.8);
+            --primary-dark: rgba(109,40,217,1);
+            --accent: rgba(236,72,153,0.9);
+            --accent-light: rgba(249,168,212,0.8);
+            --dark: #0f0c29;
+            --light: rgba(255,255,255,0.08);
+            --text-dark: #ffffff;
+            --text-light: #c7d2fe;
+            --gradient-primary: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
+            --gradient-accent: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+            --gradient-dark: linear-gradient(135deg, #0b0b0f 0%, #12121a 50%, #0a0a12 100%);
+            --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+        }
+        
+        * {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         body {
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            background: var(--gradient-dark);
+            background-attachment: fixed;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             padding: 20px;
+            color: #ffffff;
+        }
+        
+        /* Custom scrollbar to match reports.html */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1a1a2e;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
         }
         
         .login-container {
@@ -33,12 +67,12 @@
         }
         
         .login-card {
-            background: var(--background);
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.12);
             border-radius: 16px;
             padding: 2.5rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08), 
-                        0 2px 10px rgba(0, 0, 0, 0.03);
-            border: 1px solid rgba(107, 114, 128, 0.15);
+            box-shadow: 0 0 40px rgba(168,85,247,0.15);
             position: relative;
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -46,8 +80,8 @@
         
         .login-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12), 
-                        0 5px 20px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 20px 50px rgba(168, 85, 247, 0.3);
+            border-color: var(--accent);
         }
         
         .login-card::before {
@@ -68,7 +102,7 @@
         }
         
         .brand-title {
-            color: var(--dark);
+            color: #ffffff;
             font-size: 1.75rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
@@ -76,7 +110,7 @@
         }
         
         .brand-subtitle {
-            color: var(--secondary);
+            color: var(--text-light);
             font-size: 0.95rem;
             font-weight: 400;
         }
@@ -91,7 +125,7 @@
         .form-group:nth-child(2) { animation-delay: 0.3s; }
         
         .form-label {
-            color: var(--dark);
+            color: #ffffff;
             font-weight: 600;
             font-size: 0.9rem;
             margin-bottom: 0.75rem;
@@ -102,31 +136,36 @@
         .form-input {
             width: 100%;
             padding: 1rem 1.25rem;
-            border: 2px solid #e5e7eb;
+            border: 1px solid rgba(255,255,255,0.15);
             border-radius: 10px;
             font-size: 1rem;
-            color: var(--dark);
-            background: #f9fafb;
+            color: #ffffff;
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(10px);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             outline: none;
         }
         
+        .form-input::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+        
         .form-input:focus {
             border-color: var(--accent);
-            background: var(--background);
-            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+            background: rgba(255,255,255,0.1);
+            box-shadow: 0 0 0 4px rgba(236, 72, 153, 0.15);
             transform: translateY(-1px);
         }
         
         .form-input:hover:not(:focus) {
             border-color: var(--primary);
-            background: #f3f4f6;
+            background: rgba(255,255,255,0.08);
         }
         
         .btn-primary {
             width: 100%;
             padding: 1rem;
-            background: linear-gradient(135deg, var(--accent) 0%, #0da271 100%);
+            background: var(--gradient-primary);
             color: white;
             border: none;
             border-radius: 10px;
@@ -142,7 +181,8 @@
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.3);
+            background: var(--gradient-accent);
         }
         
         .btn-primary:active {
@@ -157,36 +197,19 @@
             box-shadow: none !important;
         }
         
-        .btn-primary::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 5px;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.6);
-            opacity: 0;
-            border-radius: 100%;
-            transform: scale(1) translate(-50%);
-        }
-        
-        .btn-primary:focus:not(:active)::after {
-            animation: ripple 1s ease-out;
-        }
-        
         .login-actions {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin: 1.5rem 0;
             padding-top: 1.5rem;
-            border-top: 1px solid #e5e7eb;
+            border-top: 1px solid rgba(255,255,255,0.1);
             animation: fadeInUp 0.5s ease-out 0.5s both;
             opacity: 0;
         }
         
         .login-link {
-            color: var(--primary);
+            color: var(--text-light);
             text-decoration: none;
             font-weight: 500;
             font-size: 0.95rem;
@@ -218,13 +241,13 @@
             text-align: center;
             margin-top: 2rem;
             padding-top: 1.5rem;
-            border-top: 1px solid #e5e7eb;
+            border-top: 1px solid rgba(255,255,255,0.1);
             animation: fadeInUp 0.5s ease-out 0.6s both;
             opacity: 0;
         }
         
         .signup-text {
-            color: var(--secondary);
+            color: var(--text-light);
             font-size: 0.95rem;
         }
         
@@ -242,48 +265,46 @@
             text-decoration: underline;
         }
         
-        /* Modal Animations */
-        .modal.fade .modal-dialog {
-            transform: scale(0.9);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .modal.show .modal-dialog {
-            transform: scale(1);
-        }
-        
+        /* Modal Styling for dark theme */
         .modal-content {
+            background: #0f0c29;
+            border: 1px solid rgba(255,255,255,0.15);
             border-radius: 16px;
-            border: 1px solid rgba(107, 114, 128, 0.15);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             animation: modalScale 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #ffffff;
         }
         
         .modal-header {
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-            border-bottom: 1px solid #e5e7eb;
+            background: rgba(255,255,255,0.08);
+            border-bottom: 1px solid rgba(255,255,255,0.15);
             border-radius: 16px 16px 0 0;
             padding: 1.5rem;
         }
         
         .modal-title {
-            color: var(--dark);
+            color: #ffffff;
             font-weight: 600;
+        }
+        
+        .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
         }
         
         .modal-body {
             padding: 1.5rem;
+            background: rgba(0,0,0,0.2);
         }
         
-        /* Custom OTP Modal (like registration page) */
+        /* Custom OTP Modal */
         .otp-modal {
-            background: var(--background);
+            background: #0f0c29;
             border-radius: 16px;
             padding: 2.5rem;
             width: 90%;
             max-width: 400px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-            border: 1px solid rgba(107, 114, 128, 0.15);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255,255,255,0.15);
             position: fixed;
             top: 50%;
             left: 50%;
@@ -291,6 +312,7 @@
             z-index: 1000;
             animation: modalScale 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
             display: none;
+            backdrop-filter: blur(20px);
         }
         
         .otp-modal::before {
@@ -310,7 +332,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(5px);
             z-index: 999;
             display: none;
@@ -330,34 +352,36 @@
             text-align: center;
             font-size: 1.5rem;
             font-weight: 600;
-            border: 2px solid #e5e7eb;
+            border: 1px solid rgba(255,255,255,0.2);
             border-radius: 10px;
-            background: #f9fafb;
-            color: var(--dark);
+            background: rgba(255,255,255,0.06);
+            color: #ffffff;
             transition: all 0.3s ease;
         }
         
         .otp-digit:focus {
             border-color: var(--accent);
-            background: var(--background);
-            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+            background: rgba(255,255,255,0.1);
+            box-shadow: 0 0 0 4px rgba(236, 72, 153, 0.15);
             outline: none;
             transform: translateY(-2px);
         }
         
+        /* Alert Styling for dark theme */
         .alert {
             animation: alertSlide 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border-radius: 10px;
             border: none;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-            color: #991b1b;
-            border-left: 4px solid #dc2626;
+            background: linear-gradient(135deg, rgba(239,68,68,0.2) 0%, rgba(220,38,38,0.2) 100%);
+            color: #fca5a5;
+            border-left: 4px solid #ef4444;
+            backdrop-filter: blur(10px);
         }
         
-        .success-alert {
-            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-            color: #065f46;
+        .alert-success {
+            background: linear-gradient(135deg, rgba(34,197,94,0.2) 0%, rgba(21,128,61,0.2) 100%);
+            color: #86efac;
             border-left: 4px solid var(--accent);
         }
         
@@ -448,7 +472,7 @@
         
         .password-feedback {
             font-size: 0.85rem;
-            color: var(--secondary);
+            color: var(--text-light);
             margin-top: 0.5rem;
             opacity: 0;
             transition: opacity 0.3s ease;
@@ -468,7 +492,7 @@
         
         .input-group .btn:hover {
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
         
         .otp-input {
@@ -477,6 +501,41 @@
             font-weight: 600;
             text-align: center;
             padding: 1rem;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #ffffff;
+        }
+        
+        /* Glass effect buttons */
+        .btn-glass {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-glass:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(168, 85, 247, 0.2);
+        }
+        
+        /* Background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(109, 40, 217, 0.05) 0%, transparent 50%);
+            z-index: -1;
+            pointer-events: none;
         }
     </style>
 </head>
@@ -491,20 +550,20 @@
                 </div>
 
                 {% if otp_fail %}
-                <div class="alert alert-danger">
-                    OTP incorrect. Try again.
+                <div class="alert">
+                    <strong>OTP incorrect.</strong> Please try again.
                 </div>
                 {% endif %}
 
                 {% if email_not_found %}
-                <div class="alert alert-danger">
-                    Email not found. Please register.
+                <div class="alert">
+                    <strong>Email not found.</strong> Please register first.
                 </div>
                 {% endif %}
 
                 {% if password_wrong %}
-                <div class="alert alert-danger">
-                    Wrong password.
+                <div class="alert">
+                    <strong>Wrong password.</strong> Please try again.
                 </div>
                 {% endif %}
 
@@ -528,7 +587,7 @@
                         <a href="#" class="login-link" data-bs-toggle="modal" data-bs-target="#forgot_modal">
                             Forgot Password?
                         </a>
-                        <a href="javascript:void(0)" class="login-link" onclick="window.history.back()">
+                        <a href="/" class="login-link">
                             ← Back to Previous
                         </a>
                     </div>
@@ -555,7 +614,7 @@
                             <label class="form-label">Registered Email Address</label>
                             <div class="d-flex gap-2">
                                 <input type="email" class="form-input" placeholder="your.email@company.com" id="resetEmail">
-                                <button class="btn" style="background: var(--accent); color: white; white-space: nowrap;">
+                                <button class="btn btn-glass" style="white-space: nowrap;">
                                     Send OTP
                                 </button>
                             </div>
@@ -583,19 +642,18 @@
             </div>
         </div>
 
-        <!-- OTP Verification Modal (like registration page) -->
+        <!-- OTP Verification Modal -->
         <div class="modal-overlay" id="otpOverlay"></div>
         <div class="otp-modal" id="otpModal">
             <div class="brand-header">
                 <h2 class="brand-title">Verify Email</h2>
                 <p class="brand-subtitle">Enter the 6-digit code sent to</p>
-                <p class="text-secondary" id="userEmail"></p>
+                <p class="text-light" id="userEmail"></p>
             </div>
             
             {% if otp_fail %}
-            <div class="alert alert-dismissible fade show" role="alert">
+            <div class="alert">
                 <strong>Verification Failed!</strong> The OTP you entered is incorrect. Please try again.
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
             {% endif %}
             
@@ -613,13 +671,20 @@
                 <input type="hidden" name="l_otp" id="otpInput">
                 <input type="hidden" name="l_email" id="otpEmailInput">
                 
-                <div class="d-flex justify-content-between align-items-center mt-4">
-                    <button type="button" class="btn" style="border: 2px solid var(--secondary); color: var(--secondary); padding: 0.75rem 1.5rem;" onclick="closeOTPModal()">
-                        Cancel
-                    </button>
-                    <button type="submit" class="btn" style="background: var(--accent); color: white; padding: 0.75rem 2rem;" id="verifyButton">
-                        Verify & Continue
-                    </button>
+                <div class="row">
+                    <div class="d-flex justify-content-between align-items-center mt-4">
+                        <div class="col-4">    
+                            <button type="button" class="btn btn-glass" onclick="closeOTPModal()">
+                                Cancel
+                            </button>
+                        </div>
+                        <div class="col-8">
+                            <button type="submit" class="btn-primary" id="verifyButton">
+                                Verify & Continue
+                            </button>
+                        </div> 
+                    </div>
+
                 </div>
             </form>
         </div>
@@ -635,7 +700,7 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // OTP digit input handling (like registration page)
+        // OTP digit input handling
         const otpDigits = document.querySelectorAll('.otp-digit');
         if (otpDigits.length > 0) {
             otpDigits.forEach((digit, index) => {
@@ -683,7 +748,13 @@
                 // Disable button to prevent multiple submissions
                 if (signInButton) {
                     signInButton.disabled = true;
-                    signInButton.innerHTML = 'Signing in...';
+                    signInButton.innerHTML = '<i class="bi bi-arrow-repeat spin me-2"></i> Signing in...';
+                    
+                    // Add spin class
+                    const spinIcon = signInButton.querySelector('.spin');
+                    if (spinIcon) {
+                        spinIcon.style.display = 'inline-block';
+                    }
                 }
                 
                 // Get email and store in hidden field for OTP modal
@@ -692,8 +763,6 @@
                     document.getElementById('otpEmailInput').value = emailInput.value;
                 }
                 
-                // If backend returns show_otp_modal=true, the form will continue
-                // If not, the form submits normally
                 return true;
             });
         }
@@ -715,12 +784,73 @@
                 // Disable button to prevent multiple submissions
                 if (verifyButton) {
                     verifyButton.disabled = true;
-                    verifyButton.innerHTML = 'Verifying...';
+                    verifyButton.innerHTML = '<i class="bi bi-arrow-repeat spin me-2"></i> Verifying...';
                 }
                 
                 return true;
             });
         }
+        
+        // Add spin animation for loading icons
+        const style = document.createElement('style');
+        style.textContent = `
+            .spin {
+                animation: spin 1s linear infinite;
+                display: inline-block;
+            }
+            
+            @keyframes spin {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+            
+            /* Ripple effect for buttons */
+            .btn-primary {
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .ripple {
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.4);
+                transform: scale(0);
+                animation: rippleEffect 0.6s linear;
+                pointer-events: none;
+            }
+            
+            @keyframes rippleEffect {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Add ripple effect to buttons
+        document.querySelectorAll('.btn-primary, .btn-glass').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (this.disabled) return;
+                
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.style.width = '100px';
+                ripple.style.height = '100px';
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
     });
     
     function showOTPModal() {
@@ -763,8 +893,8 @@
         
         // Create new alert
         const alertDiv = document.createElement('div');
-        alertDiv.className = `alert ${type === 'success' ? 'success-alert' : ''}`;
-        alertDiv.textContent = message;
+        alertDiv.className = `alert ${type === 'success' ? 'alert-success' : ''}`;
+        alertDiv.innerHTML = `<strong>${type === 'error' ? 'Error:' : 'Success:'}</strong> ${message}`;
         alertDiv.style.position = 'fixed';
         alertDiv.style.top = '20px';
         alertDiv.style.left = '50%';
@@ -784,80 +914,18 @@
         }, 3000);
     }
     
-    // Ripple effect for buttons
-    document.querySelectorAll('.btn-primary, .btn[style*="background: var(--accent)"]').forEach(button => {
-        button.addEventListener('click', function(e) {
-            if (this.disabled) return;
-            
-            const rect = this.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            const ripple = document.createElement('span');
-            ripple.style.position = 'absolute';
-            ripple.style.background = 'rgba(255, 255, 255, 0.4)';
-            ripple.style.borderRadius = '50%';
-            ripple.style.transform = 'scale(0)';
-            ripple.style.animation = 'ripple 0.6s linear';
-            ripple.style.left = x + 'px';
-            ripple.style.top = y + 'px';
-            ripple.style.width = '100px';
-            ripple.style.height = '100px';
-            ripple.style.pointerEvents = 'none';
-            
-            this.style.position = 'relative';
-            this.style.overflow = 'hidden';
-            this.appendChild(ripple);
-            
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
-        });
-        
-        // Button press animation
-        button.addEventListener('mousedown', function() {
-            if (!this.disabled) {
-                this.style.transform = 'translateY(0) scale(0.98)';
-            }
-        });
-        
-        button.addEventListener('mouseup', function() {
-            if (!this.disabled) {
-                this.style.transform = 'translateY(-2px) scale(1)';
-            }
-        });
-        
-        button.addEventListener('mouseleave', function() {
-            if (!this.disabled) {
-                this.style.transform = 'translateY(0) scale(1)';
-            }
-        });
-    });
-    
-    // Form input animations
-    const formInputs = document.querySelectorAll('.form-input');
-    formInputs.forEach(input => {
-        input.addEventListener('focus', function() {
-            this.parentElement.style.transform = 'translateY(-2px)';
-        });
-        
-        input.addEventListener('blur', function() {
-            this.parentElement.style.transform = 'translateY(0)';
-        });
-    });
-    
     // Send OTP button animation (for forgot password modal)
-    const sendOtpBtn = document.querySelector('.btn[style*="Send OTP"]');
+    const sendOtpBtn = document.querySelector('.btn-glass');
     if (sendOtpBtn) {
         sendOtpBtn.addEventListener('click', function(e) {
             e.preventDefault();
             const emailInput = document.getElementById('resetEmail');
             if (emailInput.value) {
-                this.innerHTML = '✓ Sent!';
-                this.style.background = 'var(--primary)';
+                this.innerHTML = '<i class="bi bi-check-circle me-2"></i> Sent!';
+                this.style.background = 'var(--accent)';
                 setTimeout(() => {
                     this.innerHTML = 'Send OTP';
-                    this.style.background = 'var(--accent)';
+                    this.style.background = '';
                 }, 2000);
             }
         });
@@ -868,79 +936,11 @@
     otpInputs.forEach(input => {
         input.addEventListener('input', function() {
             if (this.value.length === 6) {
-                this.style.background = 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)';
-                this.style.borderColor = 'var(--accent)';
+                this.style.background = 'rgba(34,197,94,0.2)';
+                this.style.borderColor = '#22c55e';
             }
         });
     });
     </script>
 </body>
 </html>
-
-<!--
-Now with more detailed and rich design elements:
-
-Enhanced Visual Design:
-
-Gradient backgrounds and borders
-
-Prominent brand header with title and subtitle
-
-Card hover effects with lift and shadow intensification
-
-Animated top border with glowing effect
-
-Richer shadows and depth effects
-
-Detailed Animations:
-
-Container appear animation with cubic-bezier timing
-
-Staggered form field animations with fadeInUp effects
-
-Button ripple effects with circular wave animation
-
-Modal scale animation with smooth transformation
-
-Link hover animations with underline growth effect
-
-Form focus transitions with lift and color change
-
-Rich Interactive Elements:
-
-Form inputs with hover and focus states
-
-Buttons with gradient backgrounds and 3D effects
-
-Links with animated underlines and transform effects
-
-OTP input with special styling and feedback
-
-Enhanced modal designs with custom headers
-
-Visual Feedback:
-
-Password strength feedback
-
-OTP input visual confirmation
-
-Button state changes (loading/success)
-
-Form validation indicators
-
-Alert animations with slide effects
-
-Professional Touches:
-
-Career-specific copywriting
-
-Professional typography and spacing
-
-Consistent color usage throughout
-
-Responsive design considerations
-
-Accessibility-friendly contrast
-
-The design is now more substantial with richer visuals while maintaining the specified color scheme and all requested animations.
--->

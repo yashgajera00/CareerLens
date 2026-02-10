@@ -8,53 +8,122 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         :root {
-            --primary: #4b5563;
-            --accent: #10b981;
-            --dark: #1f2937;
-            --danger: #ef4444;
-            --success: #10b981;
+            --primary: rgba(168,85,247,0.9);
+            --primary-light: rgba(196,181,253,0.8);
+            --primary-dark: rgba(109,40,217,1);
+            --accent: rgba(236,72,153,0.9);
+            --dark: #0f0c29;
+            --light: rgba(255,255,255,0.08);
+            --text-dark: #ffffff;
+            --text-light: #c7d2fe;
+        }
+        
+        * {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         body {
-            background: #f9fafb;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0b0b0f 0%, #12121a 50%, #0a0a12 100%);
+            background-attachment: fixed;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: rgba(255,255,255,0.92);
+            padding-top: 60px;
         }
         
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+        
+        /* Navbar */
+        .navbar {
+            background: rgba(255,255,255,0.2) !important;
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255,255,255,0.25);
+            padding: 10px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        .navbar-brand-logo {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            margin-right: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand strong {
+            color: #ffffff !important;
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -0.5px;
+        }
+        
+        .navbar-text {
+            color: rgba(255,255,255,0.9) !important;
+        }
+        
+        /* Quiz Container */
         .quiz-container {
             max-width: 800px;
-            margin: 100px auto 50px;
+            margin: 30px auto 50px;
             padding: 20px;
         }
         
         .quiz-card {
-            background: white;
-            border-radius: 12px;
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow: 0 0 40px rgba(168,85,247,0.15);
+            border-radius: 16px;
             padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            border: 1px solid #e5e7eb;
             position: relative;
             min-height: 500px;
+            color: #ffffff;
         }
         
+        /* Options */
         .option-label {
             display: block;
             padding: 15px 20px;
             margin: 10px 0;
-            border: 2px solid #e5e7eb;
-            border-radius: 10px;
+            background: rgba(255,255,255,0.06);
+            border: 2px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s;
             position: relative;
+            color: rgba(255,255,255,0.9);
         }
         
         .option-label:hover {
             border-color: var(--primary);
-            background: #f8fafc;
+            background: rgba(168,85,247,0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(168,85,247,0.2);
         }
         
         .option-label.selected {
             border-color: var(--primary);
-            background: #f0f9ff;
+            background: rgba(168,85,247,0.15);
+            box-shadow: 0 5px 15px rgba(168,85,247,0.25);
         }
         
         .option-radio {
@@ -63,7 +132,7 @@
         
         .option-text {
             font-size: 1.1rem;
-            color: var(--dark);
+            color: rgba(255,255,255,0.95);
         }
         
         .option-letter {
@@ -72,10 +141,11 @@
             height: 30px;
             line-height: 30px;
             text-align: center;
-            background: #e5e7eb;
+            background: rgba(255,255,255,0.1);
             border-radius: 50%;
             margin-right: 15px;
             font-weight: bold;
+            color: rgba(255,255,255,0.9);
         }
         
         .option-label.selected .option-letter {
@@ -83,8 +153,9 @@
             color: white;
         }
         
+        /* Buttons */
         .btn-primary-custom {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
             color: white;
             border: none;
             padding: 12px 35px;
@@ -95,12 +166,12 @@
         }
         
         .btn-primary-custom:hover {
-            background: var(--dark);
             transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(168,85,247,0.3);
         }
         
         .btn-danger-custom {
-            background: var(--danger);
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             color: white;
             border: none;
             padding: 10px 25px;
@@ -110,21 +181,49 @@
         }
         
         .btn-danger-custom:hover {
-            background: #dc2626;
             transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(239,68,68,0.3);
         }
         
+        .btn-success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(16,185,129,0.3);
+        }
+        
+        .btn-outline-secondary {
+            border-color: rgba(255,255,255,0.3);
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .btn-outline-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: var(--primary);
+        }
+        
+        /* Skill Badge */
         .skill-badge {
-            background: #e5e7eb;
-            color: var(--dark);
-            padding: 5px 15px;
+            background: rgba(168,85,247,0.2);
+            color: var(--primary-light);
+            padding: 8px 20px;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 600;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             display: inline-block;
+            border: 1px solid rgba(168,85,247,0.3);
         }
         
+        /* Navigation */
         .nav-buttons {
             display: flex;
             justify-content: space-between;
@@ -136,20 +235,32 @@
         }
         
         .question-counter {
-            background: var(--primary);
-            color: white;
-            padding: 5px 15px;
+            background: rgba(168,85,247,0.2);
+            color: var(--primary-light);
+            padding: 8px 20px;
             border-radius: 20px;
             font-weight: 600;
             position: absolute;
-            top: 15px;
+            top: 20px;
             right: 30px;
+            border: 1px solid rgba(168,85,247,0.3);
         }
         
         .leave-quiz-btn {
             position: absolute;
-            top: 15px;
+            top: 20px;
             right: 150px;
+        }
+        
+        /* Question Navigation Dots */
+        .question-info {
+            margin-top: 20px;
+            padding: 25px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 16px;
+            border-left: 4px solid var(--primary);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.12);
         }
         
         .question-grid {
@@ -170,55 +281,147 @@
             cursor: pointer;
             font-weight: bold;
             transition: all 0.3s;
-            border: 2px solid #e5e7eb;
+            text-decoration: none;
+            color: rgba(255,255,255,0.9);
         }
         
         .question-dot.current {
             background: var(--primary);
             color: white;
-            border-color: var(--primary);
+            border: 2px solid var(--primary);
+            box-shadow: 0 5px 15px rgba(168,85,247,0.4);
         }
         
         .question-dot.answered {
-            background: var(--success);
-            color: white;
-            border-color: var(--success);
+            background: rgba(16,185,129,0.2);
+            color: #10b981;
+            border: 2px solid #10b981;
         }
         
         .question-dot.unanswered {
-            background: white;
-            color: var(--dark);
-            border-color: #e5e7eb;
+            background: rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.7);
+            border: 2px solid rgba(255,255,255,0.15);
         }
         
         .question-dot:hover {
             transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(168,85,247,0.3);
         }
         
-        .question-info {
-            margin-top: 20px;
-            padding: 15px;
-            background: #f8fafc;
-            border-radius: 10px;
-            border-left: 4px solid var(--primary);
+        /* Question Content */
+        .question-content {
+            min-height: 300px;
+        }
+        
+        h3 {
+            color: #ffffff !important;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+        
+        /* Modal Styling */
+        .modal-content {
+            background: rgba(15,12,41,0.95) !important;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #ffffff;
+            border-radius: 16px;
         }
         
         .modal-header {
-            background: var(--primary);
-            color: white;
+            background: rgba(168,85,247,0.2) !important;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            color: #ffffff;
         }
         
-        .question-content {
-            min-height: 300px;
+        .modal-footer {
+            border-top: 1px solid rgba(255,255,255,0.15);
+        }
+        
+        .btn-close-white {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+        
+        /* Test Summary Cards */
+        .card {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            backdrop-filter: blur(10px);
+        }
+        
+        .card-body {
+            color: #ffffff;
+        }
+        
+        .alert {
+            background: rgba(245,158,11,0.15);
+            border: 1px solid rgba(245,158,11,0.3);
+            color: rgba(255,255,255,0.9);
+        }
+        
+        /* Legend */
+        .legend {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.8);
+        }
+        
+        /* Processing Modal */
+        #processingModal .modal-content {
+            background: rgba(15,12,41,0.98) !important;
+            border: 1px solid var(--primary);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .quiz-container {
+                margin: 20px auto;
+                padding: 15px;
+            }
+            
+            .quiz-card {
+                padding: 20px;
+                min-height: 400px;
+            }
+            
+            .nav-buttons {
+                position: relative;
+                bottom: auto;
+                left: auto;
+                right: auto;
+                margin-top: 30px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .leave-quiz-btn {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-bottom: 20px;
+            }
+            
+            .question-counter {
+                position: relative;
+                top: auto;
+                right: auto;
+                display: inline-block;
+                margin-bottom: 20px;
+            }
+            
+            .question-dot {
+                width: 35px;
+                height: 35px;
+            }
         }
     </style>
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="/home-login">
-                <img src="{{url_for('static',filename = 'logo.png')}}" class="me-2" style="width: 40px; height: 40px;">
+                <img src="{{url_for('static',filename = 'logo.png')}}" class="navbar-brand-logo">
                 <strong>CareerLens</strong>
             </a>
             <div class="navbar-text">
@@ -297,19 +500,19 @@
         <!-- Question Navigation Dots (Bottom) -->
         <div class="question-info">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h6 class="mb-0">Question Navigation</h6>
+                <h6 class="mb-0" style="color: #ffffff;">Question Navigation</h6>
                 <div class="legend d-flex gap-3">
                     <div class="d-flex align-items-center gap-1">
                         <div class="question-dot current" style="width: 20px; height: 20px;"></div>
-                        <small>Current</small>
+                        <small style="color: rgba(255,255,255,0.8);">Current</small>
                     </div>
                     <div class="d-flex align-items-center gap-1">
                         <div class="question-dot answered" style="width: 20px; height: 20px;"></div>
-                        <small>Answered</small>
+                        <small style="color: rgba(255,255,255,0.8);">Answered</small>
                     </div>
                     <div class="d-flex align-items-center gap-1">
                         <div class="question-dot unanswered" style="width: 20px; height: 20px;"></div>
-                        <small>Unanswered</small>
+                        <small style="color: rgba(255,255,255,0.8);">Unanswered</small>
                     </div>
                 </div>
             </div>
@@ -383,13 +586,13 @@
                     </div>  
                     
                     <div class="test-summary mb-4">
-                        <h6>Test Summary:</h6>
+                        <h6 style="color: #ffffff;">Test Summary:</h6>
                         <div class="row">
                             <div class="col-6">
                                 <div class="card text-center mb-3">
                                     <div class="card-body py-3">
                                         <h4 class="text-success" id="answeredCount">0</h4>
-                                        <small>Answered</small>
+                                        <small style="color: rgba(255,255,255,0.8);">Answered</small>
                                     </div>
                                 </div>
                             </div>
@@ -397,7 +600,7 @@
                                 <div class="card text-center mb-3">
                                     <div class="card-body py-3">
                                         <h4 class="text-danger" id="unansweredCount">0</h4>
-                                        <small>Unanswered</small>
+                                        <small style="color: rgba(255,255,255,0.8);">Unanswered</small>
                                     </div>
                                 </div>
                             </div>
