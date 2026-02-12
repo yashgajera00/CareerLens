@@ -1,0 +1,2 @@
+[tool.amp]
+app = "app:app"
