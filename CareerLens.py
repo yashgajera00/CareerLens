@@ -8,7 +8,7 @@ from collections import defaultdict
 app = Flask(__name__)
 app.secret_key = "abc"
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/userdata'
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:orFNZmgANyAzPAZQsRoMPDgIijLBZmCq@switchyard.proxy.rlwy.net:40897/railway"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
