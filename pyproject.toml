@@ -1,2 +1,2 @@
-[tool.amp]
-app = "app:app"
+[tool.vercel.scripts]
+build = "python app.py"
