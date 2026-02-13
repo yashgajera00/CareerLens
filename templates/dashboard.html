@@ -785,13 +785,14 @@
         <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <form method="POST" action="/select-career-fields" onsubmit="return validateSelection()">
+                    <div class="career-scroll">
                     <div class="modal-header">
                         <h5 class="modal-title"><i class="bi bi-briefcase me-2"></i>Select Career Fields (Min 1 – Max 5)</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
                     <div class="modal-body">
-                        <div class="career-scroll">
+                        
                             <div class="row">
                                 {% for field in ALL_CAREERS %}
                                 <div class="col-md-6 mb-2">
@@ -802,7 +803,7 @@
                                 </div>
                                 {% endfor %}
                             </div>
-                        </div>
+                        
                     </div>
 
                     <div class="modal-footer">
@@ -813,6 +814,7 @@
                             <i class="bi bi-x-circle me-2"></i>Close
                         </button>
                     </div>
+                        </div>
                 </form>
             </div>
         </div>
