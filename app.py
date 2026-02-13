@@ -82,8 +82,8 @@ def mailSender(receiver_email, subject, message):
     from email.mime.text import MIMEText
     from email.mime.multipart import MIMEMultipart
 
-    sender_email = 'gajerayash999@gmail.com'
-    password = 'rpud ypzz mnyb foaa'   # Gmail app password
+    sender_email = 'careerlens2026@gmail.com'
+    password = 'ikos inay rtpz iffz'   # Gmail app password
 
     try:
         msg = MIMEMultipart()
