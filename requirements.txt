@@ -2,3 +2,4 @@ Flask
 flask_sqlalchemy
 pymysql
 gunicorn
+cryptography
